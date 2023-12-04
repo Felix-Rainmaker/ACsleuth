@@ -1,2 +1,2 @@
 # ACsleuth
-ACsleuth: Fine-grained Anomalous Cell Detection for Single-cell Multiomics
+ACsleuth: Fine-grained Anomalous Cell Detection for Single-cell Multiomics.
