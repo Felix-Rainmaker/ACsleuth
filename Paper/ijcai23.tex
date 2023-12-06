@@ -72,7 +72,7 @@
 /TemplateVersion (IJCAI.2023.0)
 }
 
-\title{ACsleuth: Fine-grained Anomalous Cell Detection for Single-cell Multiomics}
+\title{ACsleuth: Domain Adaptive and Fine-grained Anomalous Cell Detection for Single-cell Multiomics}
 
 
 % Single author syntax
@@ -158,7 +158,13 @@ technical variation (e.g., different laboratory conditions) across diverse studi
 commonly referred recognized as batch effects in molecular biology literature \cite{Polyphony}. 
 The intricate nature of scRNA-seq data, characterized by noise, batch effects, high 
 dimensionality and sparsity \cite{dands} poses challenges that impede these deep 
-methods from achieving optimal performance directly on the raw data.
+methods from achieving optimal performance directly based on the raw data.
+
+Data obtained through different sequencing technologies originates from heterogeneous distributions. 
+This dataset shift is commonly denoted as domain bias in computer vision, encompassing categories 
+such as style differences, etc. Batch effects also can be construed as a form of domain bias. 
+However, most previous studies failed to recognize such common characteristics between these two 
+biases and tended to address them independently, which are neither elegant nor efficient.
 
 Besides, most of anomaly detection studies work solely on identifying anomalies within normal 
 observations, which often treating it as a class-imbalance binary classification task \cite{OA}. 
@@ -181,18 +187,14 @@ cells. Our contributions are summarized as follows:
 \item Methodologically, we introduce an innovative workflow called ACsleuth, which contains 
 fine-grained anomalous cell detection. The anomaly detector is first trained 
 unsupervisedly on the reference dataset which has only normal observations, then we learn 
-the batch effects on the normal samples identified by the former detector then use it for 
-the batch correction on anomaly sets, finally subtyping anomalies simply by a recent 
+the batch effects on the normal samples identified by the former detector and use it for 
+the batch correction on anomaly sets sequentially, finally subtyping anomalies simply by a recent 
 single-cell clustering method.
-\item Innovatively, we tackle batch effects in the target dataset after removing anomalous 
-observations. ACsleuth involves learning the batch effect on the dataset with solely normal 
-cells and subsequently applying batch correction on the detected anomalies, thus 
-mitigating such kind of systematic bias in scRNA-seq data. 
-\item Generally, we also employ transfer learning for anomaly detection from the scRNA-seq 
-data to the single-cell assay for transposase-accessible chromatin using 
-sequencing (scATAC-seq) data. Experimental results demonstrate the effectiveness of ACsleuth 
-in capturing nuanced representations of single cells, surpassing mere extraction of gene 
-expression features from RNA.
+\item Innovatively, we achieve domain adaptation by tackling batch effects in the target dataset 
+after removing anomalous observations and using datasets derived from different sequencing technologies 
+as the reference and the target data. For the former,  ACsleuth involves leveraging a wasserstein 
+distance as the domain transfer loss in MMD, to learn the domain bias with solely normal cells 
+then subsequently applying bias correction on the detected anomalies before fine-grained subtyping them.
 \item Empirically, we conduct extensive experiments to validate the exceptional performance 
 of ACsleuth. Across evaluations on three distinct scRNA-seq datasets within different numbers 
 of highly variable genes, ACsleuth consistently raised state-of-the-art in the majority of 
@@ -641,11 +643,13 @@ integrates anomaly detection with fine-grained anomaly detection, which further 
 correction module to alleviate bias inherent in the raw data. More precisely, we first 
 employ a GAN-based model to detect anomalies according to the reconstruction error, then 
 capture batch effects from filtered normal observations and correct them on the detected 
-anomalies. Finally, we utilize the DESC clustering algorithm to fine-grained detecting anomalous cells. 
+anomalies. We also prove that the domain adaptation module is effective for cross-domain tasks. 
+Finally, we utilize the DESC clustering algorithm to fine-grained detecting anomalous cells. 
 ACsleuth outperforms state-of-the-art approaches in anomaly detection methods for tabular 
 data and their simple combinations with deep clustering algorithms. Empirically results 
 strongly improve ACsleuth’ superiority, demonstrating its generalizability and robustness. 
-We’d like to further explore the potential of the fine-grained anomaly detection workflow generalized to another fields.
+We’d like to further explore the potential of the domain adapyative fine-grained anomaly 
+detection workflow for tabular data generalized to another fields.
 \section*{Acknowledgments}
 
 

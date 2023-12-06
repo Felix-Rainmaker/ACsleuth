@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.11.2)  2 DEC 2023 21:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.11.2)  7 DEC 2023 10:39
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -422,6 +422,11 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 \titlearea=\box58
 \actualheight=\skip64
 
+Underfull \hbox (badness 1215) in paragraph at lines 163--168
+[]\OT1/ptm/m/n/10 Data ob-tained through dif-fer-ent se-quenc-ing tech-nolo-gies
+ []
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [1{/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/base/8r.enc}
@@ -429,34 +434,40 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 ]
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 181.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 187.
  (/usr/local/texlive/2023/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
 <Framework.jpg, id=94, 1159.33125pt x 831.105pt>
 File: Framework.jpg Graphic file (type jpg)
 <use Framework.jpg>
-Package pdftex.def Info: Framework.jpg  used on input line 256.
+Package pdftex.def Info: Framework.jpg  used on input line 258.
 (pdftex.def)             Requested size: 231.86214pt x 166.21805pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
  [2]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 281.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 283.
  (/usr/local/texlive/2023/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 281.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 283.
  (/usr/local/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [3 <./Framework.jpg>]
-Underfull \hbox (badness 3780) in paragraph at lines 406--412
+)
+Underfull \vbox (badness 1178) has occurred while \output is active []
+
+ [3 <./Framework.jpg>]
+Underfull \hbox (badness 3780) in paragraph at lines 408--414
 \OT1/ptm/m/n/10 identity vec-tor for se-lect-ing the cor-re-spond-ing \style-
  []
 
 
-Overfull \hbox (4.4869pt too wide) in paragraph at lines 425--436
+Overfull \hbox (4.4869pt too wide) in paragraph at lines 427--438
  [][] 
  []
 
-[4] [5] (./ijcai23.bbl [6]
+[4] [5] [6] (./ijcai23.bbl
 Underfull \hbox (badness 1297) in paragraph at lines 39--42
 \OT1/ptm/m/n/10 Michele De Si-moni, and Emanuele Ghelfi.  A sur-
  []
@@ -496,12 +507,12 @@ Underfull \hbox (badness 2617) in paragraph at lines 110--113
 []\OT1/ptm/m/n/10 Mayu Saku-rada and Take-hisa
  []
 
-
+[7]
 Underfull \hbox (badness 3989) in paragraph at lines 115--118
 []\OT1/ptm/m/n/10 Tom Shenkar and Lior Wolf.
  []
 
-[7]
+
 Underfull \hbox (badness 2213) in paragraph at lines 130--133
 []\OT1/ptm/m/n/10 Chun Wang, Shirui Pan, Ruiqi Hu,
  []
@@ -533,13 +544,13 @@ Package rerunfilecheck Info: File `ijcai23.out' has not changed.
 Here is how much of TeX's memory you used:
  12285 strings out of 476025
  195901 string characters out of 5790017
- 1890388 words of memory out of 5000000
+ 1891388 words of memory out of 5000000
  32480 multiletter control sequences out of 15000+600000
  533821 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,18n,76p,346b,546s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,18n,76p,346b,542s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on ijcai23.pdf (8 pages, 449755 bytes).
+Output written on ijcai23.pdf (8 pages, 450317 bytes).
 PDF statistics:
  300 PDF objects out of 1000 (max. 8388607)
  254 compressed objects within 3 object streams
