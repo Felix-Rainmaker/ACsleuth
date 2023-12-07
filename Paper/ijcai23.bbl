@@ -116,6 +116,11 @@ Tom Shenkar and Lior Wolf.
 \newblock Anomaly detection for tabular data with internal contrastive learning.
 \newblock In {\em International Conference on Learning Representations}, 2021.
 
+\bibitem[\protect\citeauthoryear{Stuart \bgroup \em et al.\egroup }{2021}]{RNAmore}
+Tim Stuart, Avi Srivastava, Shaista Madad, Caleb~A. Lareau, and Rahul Satija.
+\newblock Single-cell chromatin state analysis with signac.
+\newblock {\em Nature Methods}, 18(11):1333--1341, 2021.
+
 \bibitem[\protect\citeauthoryear{Traag \bgroup \em et al.\egroup }{2019}]{leiden}
 Vincent~A Traag, Ludo Waltman, and Nees~Jan Van~Eck.
 \newblock From louvain to leiden: guaranteeing well-connected communities.
@@ -125,6 +130,11 @@ Vincent~A Traag, Ludo Waltman, and Nees~Jan Van~Eck.
 Wenxuan Tu, Sihang Zhou, Xinwang Liu, Xifeng Guo, Zhiping Cai, En~Zhu, and Jieren Cheng.
 \newblock Deep fusion clustering network.
 \newblock In {\em Proceedings of the AAAI Conference on Artificial Intelligence}, volume~35, pages 9978--9987, 2021.
+
+\bibitem[\protect\citeauthoryear{Wang and Deng}{2018}]{domainada}
+Mei Wang and Weihong Deng.
+\newblock Deep visual domain adaptation: A survey.
+\newblock {\em Neurocomputing}, 312:135--153, 2018.
 
 \bibitem[\protect\citeauthoryear{Wang \bgroup \em et al.\egroup }{2019}]{AGC}
 Chun Wang, Shirui Pan, Ruiqi Hu, Guodong Long, Jing Jiang, and Chengqi Zhang.

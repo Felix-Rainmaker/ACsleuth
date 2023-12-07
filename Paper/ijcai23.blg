@@ -8,45 +8,45 @@ Warning--there's a number but no volume in scArches
 Warning--empty booktitle in kmeans
 Warning--can't use both volume and number fields in DFCN
 Warning--can't use both volume and number fields in scTAG
-You've used 33 entries,
+You've used 35 entries,
             2439 wiz_defined-function locations,
-            761 strings with 11618 characters,
-and the built_in function-call counts, 16157 in all, are:
-= -- 1601
-> -- 915
+            775 strings with 11903 characters,
+and the built_in function-call counts, 17045 in all, are:
+= -- 1695
+> -- 956
 < -- 12
-+ -- 330
-- -- 326
-* -- 1387
-:= -- 2616
-add.period$ -- 107
-call.type$ -- 33
-change.case$ -- 292
-chr.to.int$ -- 33
-cite$ -- 38
-duplicate$ -- 588
-empty$ -- 1049
-format.name$ -- 361
-if$ -- 3308
++ -- 344
+- -- 340
+* -- 1468
+:= -- 2762
+add.period$ -- 113
+call.type$ -- 35
+change.case$ -- 307
+chr.to.int$ -- 35
+cite$ -- 40
+duplicate$ -- 616
+empty$ -- 1110
+format.name$ -- 378
+if$ -- 3484
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 34
-newline$ -- 170
-num.names$ -- 103
-pop$ -- 263
+missing$ -- 36
+newline$ -- 180
+num.names$ -- 109
+pop$ -- 272
 preamble$ -- 1
-purify$ -- 326
+purify$ -- 343
 quote$ -- 0
-skip$ -- 494
+skip$ -- 516
 stack$ -- 0
-substring$ -- 728
-swap$ -- 175
+substring$ -- 794
+swap$ -- 179
 text.length$ -- 12
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 260
+type$ -- 276
 warning$ -- 5
-while$ -- 114
-width$ -- 37
-write$ -- 438
+while$ -- 122
+width$ -- 40
+write$ -- 464
 (There were 5 warnings)

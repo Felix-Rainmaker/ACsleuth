@@ -152,19 +152,23 @@ information such as ItClust \cite{ItClust}, scArches \cite{scArches}.
 However, both of aforementioned tasks are not ideally suited for fine-grained anomalous cells detection. 
 Anomaly detection naturally exhibits class-imbalance characteristics, while the challenge 
 in fine-grained anomaly detection lies in acquiring more precise representations of distinct cell types 
-due to their inherent similarity. There are also various deep anomaly detection or deep 
-clustering methods for tabular data. Nevertheless, employing reference-based methods can be challenging, given the presence of 
+due to their inherent similarity. Nevertheless, employing reference-based methods can be challenging, given the presence of 
 technical variation (e.g., different laboratory conditions) across diverse studies, 
 commonly referred recognized as batch effects in molecular biology literature \cite{Polyphony}. 
 The intricate nature of scRNA-seq data, characterized by noise, batch effects, high 
 dimensionality and sparsity \cite{dands} poses challenges that impede these deep 
 methods from achieving optimal performance directly based on the raw data.
 
-Data obtained through different sequencing technologies originates from heterogeneous distributions. 
-This dataset shift is commonly denoted as domain bias in computer vision, encompassing categories 
-such as style differences, etc. Batch effects also can be construed as a form of domain bias. 
-However, most previous studies failed to recognize such common characteristics between these two 
-biases and tended to address them independently, which are neither elegant nor efficient.
+Domain adaptation is a crucial consideration in biological data analysis. Under the same sequencing technique, one of most 
+typical instances is correcting batch effect, as we have discussed above. For example, the gene expression of cells from 
+the same tissue but obtained from different patients, may be interfered by pronounced batch effects. 
+Additionally, data derived from different sequencing technologies exhibits heterogeneous distributions, while 
+compared with scRNA-seq,other sequencing technologies like scATAC-seq are even rarer \cite{RNAmore}.
+This dataset shift is commonly denoted as domain bias in computer vision, encompassing aspects 
+such as style differences,diverse sensory devices, etc \cite{domainada}. Both batch effects within the same sequencing technique data and the bias arising from different 
+sequencing technologies contribute to domain bias \cite{ACE}. However, most previous studies failed to 
+recognize such shared characteristics between these two biases and tended to address them 
+independently, which are neither elegant nor efficient.
 
 Besides, most of anomaly detection studies work solely on identifying anomalies within normal 
 observations, which often treating it as a class-imbalance binary classification task \cite{OA}. 
@@ -192,13 +196,16 @@ the batch correction on anomaly sets sequentially, finally subtyping anomalies s
 single-cell clustering method.
 \item Innovatively, we achieve domain adaptation by tackling batch effects in the target dataset 
 after removing anomalous observations and using datasets derived from different sequencing technologies 
-as the reference and the target data. For the former,  ACsleuth involves leveraging a wasserstein 
+as the reference and the target data. For the former, ACsleuth involves leveraging a wasserstein 
 distance as the domain transfer loss in MMD, to learn the domain bias with solely normal cells 
-then subsequently applying bias correction on the detected anomalies before fine-grained subtyping them.
+then subsequently applying bias correction on the detected anomalies before fine-grained subtyping them. 
+For the latter, we simply correct the domain bias in the cross-domain anomaly detection task to obtain 
+distinct representations for anomalous cells.
 \item Empirically, we conduct extensive experiments to validate the exceptional performance 
-of ACsleuth. Across evaluations on three distinct scRNA-seq datasets within different numbers 
-of highly variable genes, ACsleuth consistently raised state-of-the-art in the majority of 
-anomaly detection and fine-grained detection.
+of ACsleuth. Across evaluations on three distinct scRNA-seq datasets and one scATAC-seq dataset 
+for cross-domain anomaly detection task within different numbers of highly variable genes, 
+ACsleuth consistently raised state-of-the-art in the majority of anomaly detection and 
+fine-grained detection.
 \end{itemize}
 \section{Related Works}
 \subsection{Anomaly Detection}
