@@ -439,6 +439,7 @@ trained generator within \textit{module III}.
         & & & 3253 & 12.73\% \\ 
         \multirow{2}{*}{\centering Cancer} & \multirow{2}{*}{\centering scRNA-seq} & \multirow{2}{*}{\centering 33538} & 7721 & 50.03\%  \\
         & & & 4950 & 58.12\% \\ 
+        cSCC & scRNA-seq & 32738 & 6181 & 37.58\% \\
         TME & scATAC-seq & 23127 & 2968 & 60.24\% \\
         \hline
     \end{tabular}
@@ -520,9 +521,13 @@ labels is assumed to beknown or automatically inferred during the clustering. In
         & & 6000 & 0.824$\pm$0.007 & 0.828$\pm$0.014 & 0.856$\pm$0.014 & \textbf{0.892$\pm$0.008} & 0.543$\pm$0.025 & 0.681$\pm$0.006 & 0.735$\pm$0. \\
         & & full & \textbf{0.717$\pm$0.059} & 0.638$\pm$0.005 & 0.556$\pm$0.006 & 0.686$\pm$0.024 & 0.471$\pm$0.026 & 0.571$\pm$0.003 & 0.683$\pm$0. \\
         \hline
-        \multirow{3}{*}{\centering TME} & \multirow{3}{*}{\centering Tumor(pre)} & 3000 & & 0.582$\pm$0.011 & 0.791$\pm$0.050 & 0.578$\pm$0.016 & 0.493$\pm$0.030 & 0.488$\pm$0.001 & 0.752$\pm$0. \\
-        & & 6000 & & 0.590$\pm$0.017 & 0.728$\pm$0.028 & 0.591$\pm$0.013 & 0.511$\pm$0.038 & 0.509$\pm$0.002 & 0.733$\pm$0. \\
-        & & full & & 0.640$\pm$0.021 & 0.756$\pm$0.012 & 0.638$\pm$0.017 & 0.538$\pm$0.032 & 0.532$\pm$0.002 & 0.529$\pm$0. \\
+        \multirow{3}{*}{\centering TME} & \multirow{3}{*}{\centering Tumor(pre)} & 3000 & 0.0$\pm$0.0 & 0.582$\pm$0.011 & 0.791$\pm$0.050 & 0.578$\pm$0.016 & 0.493$\pm$0.030 & 0.488$\pm$0.001 & 0.752$\pm$0. \\
+        & & 6000 & 0.0$\pm$0.0 & 0.590$\pm$0.017 & 0.728$\pm$0.028 & 0.591$\pm$0.013 & 0.511$\pm$0.038 & 0.509$\pm$0.002 & 0.733$\pm$0. \\
+        & & full & 0.0$\pm$0.0 & 0.640$\pm$0.021 & 0.756$\pm$0.012 & 0.638$\pm$0.017 & 0.538$\pm$0.032 & 0.532$\pm$0.002 & 0.529$\pm$0. \\
+        \hline
+        \multirow{3}{*}{\centering cSCC} & \multirow{3}{*}{\centering Diff \& Basal \& Cyc Tumor} & 3000 & 0.0$\pm$0.0 & 0.486$\pm$0.014 & 0.173$\pm$0.025 & 0.085$\pm$0.042 & 0.0$\pm$0.0 & 0.484$\pm$0.004 & 0.0$\pm$0. \\
+        & & 6000 & 0.0$\pm$0.0 & 0.503$\pm$0.007 & 0.154$\pm$0.020 & 0.123$\pm$0.030 & 0.0$\pm$0.0 & 0.491$\pm$0.006 & 0.0$\pm$0. \\
+        & & full & 0.0$\pm$0.0 & 0.510$\pm$0.010 & 0.155$\pm$0.052 & 0.140$\pm$0.031 & 0.0$\pm$0.0 & 0.561$\pm$0.005 & 0.0$\pm$0. \\
         \hline
         \multirow{3}{*}{\centering PBMC-TME} & \multirow{3}{*}{\centering Tumor(pre)} & 3000 & & 0.570$\pm$0.021 & 0.583$\pm$0.032 & 0.645$\pm$0.044 & 0.$\pm$0. & 0.524$\pm$0.002 & 0.$\pm$0.  \\
         & & 6000 & & 0.573$\pm$0.034 & 0.629$\pm$0.044 & 0.637$\pm$0.070 & 0.$\pm$0. & 0.533$\pm$0.001 & 0.$\pm$0. \\
@@ -556,9 +561,9 @@ labels is assumed to beknown or automatically inferred during the clustering. In
 \subsection{Experimental Settings}
 \textbf{Dataset.}	Our experiments contain anomaly cells’ detection and anomaly cell 
 clustering. Furthermore, each task splits to two parts. For the former, we use datasets 
-simply called PBMCs, Cancer and TME, including scRNA-seq and scATAC-seq, as we have both 
+simply called PBMCs, Cancer, cSCC and TME, including scRNA-seq and scATAC-seq, as we have both 
 intra-data detection and cross-data detection. In detail, we specifically treat B cells 
-and natural killer (NK) cells as anomalies in PBMCs. For the latter, we use Cancer for 
+and natural killer (NK) cells as anomalies in PBMCs. For the latter, we use Cancer and cSCC for 
 the task of single-batch and concatenate different batches for the multi-batch task. The 
 detailed information is described in Table 1. Each dataset is split according to the 
 number of highly variable genes, including 3000, 6000 and all genes respectively. Besides, 
