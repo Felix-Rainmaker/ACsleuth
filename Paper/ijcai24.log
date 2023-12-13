@@ -1,13 +1,13 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.11.2)  9 DEC 2023 10:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.11.2)  13 DEC 2023 20:20
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**ijcai23
-(./ijcai23.tex
+**ijcai24
+(./ijcai24.tex
 LaTeX2e <2022-11-01> patch level 1
 L3 programming layer <2023-02-22>
-IJCAI--23 Instructions for Authors
+IJCAI--24 Instructions for Authors
 (/usr/local/texlive/2023/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
 (/usr/local/texlive/2023/texmf-dist/tex/latex/base/size10.clo
@@ -24,7 +24,7 @@ File: size10.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
 \abovecaptionskip=\skip48
 \belowcaptionskip=\skip49
 \bibindent=\dimen140
-) (./ijcai23.sty
+) (./ijcai24.sty
 Conference Style, version of November 2018
 \titlepad=\skip50
 \titlebox=\skip51
@@ -357,14 +357,14 @@ Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
 )
 \c@example=\count308
 \c@theorem=\count309
-LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 107.
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 108.
  (/usr/local/texlive/2023/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count310
 \l__pdf_internal_box=\box56
-) (./ijcai23.aux
+) (./ijcai24.aux
 
 LaTeX Warning: Label `tab:plain' multiply defined.
 
@@ -372,30 +372,30 @@ LaTeX Warning: Label `tab:plain' multiply defined.
 LaTeX Warning: Label `tab:plain' multiply defined.
 
 )
-\openout1 = `ijcai23.aux'.
+\openout1 = `ijcai24.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 107.
-LaTeX Font Info:    ... okay on input line 107.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 107.
-LaTeX Font Info:    ... okay on input line 107.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 107.
-LaTeX Font Info:    ... okay on input line 107.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 107.
-LaTeX Font Info:    ... okay on input line 107.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 107.
-LaTeX Font Info:    ... okay on input line 107.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 107.
-LaTeX Font Info:    ... okay on input line 107.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 107.
-LaTeX Font Info:    ... okay on input line 107.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 107.
-LaTeX Font Info:    ... okay on input line 107.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 107.
-LaTeX Font Info:    ... okay on input line 107.
-Package hyperref Info: Link coloring OFF on input line 107.
- (./ijcai23.out) (./ijcai23.out)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 108.
+LaTeX Font Info:    ... okay on input line 108.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 108.
+LaTeX Font Info:    ... okay on input line 108.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 108.
+LaTeX Font Info:    ... okay on input line 108.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 108.
+LaTeX Font Info:    ... okay on input line 108.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 108.
+LaTeX Font Info:    ... okay on input line 108.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 108.
+LaTeX Font Info:    ... okay on input line 108.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 108.
+LaTeX Font Info:    ... okay on input line 108.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 108.
+LaTeX Font Info:    ... okay on input line 108.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 108.
+LaTeX Font Info:    ... okay on input line 108.
+Package hyperref Info: Link coloring OFF on input line 108.
+ (./ijcai24.out) (./ijcai24.out)
 \@outlinefile=\write3
-\openout3 = `ijcai23.out'.
+\openout3 = `ijcai24.out'.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
@@ -422,44 +422,49 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 \titlearea=\box58
 \actualheight=\skip64
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 1400) has occurred while \output is active []
 
  [1{/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 
 
 ]
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 191.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 188.
  (/usr/local/texlive/2023/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 <Framework.jpg, id=99, 1159.33125pt x 831.105pt>
 File: Framework.jpg Graphic file (type jpg)
 <use Framework.jpg>
-Package pdftex.def Info: Framework.jpg  used on input line 265.
+Package pdftex.def Info: Framework.jpg  used on input line 262.
 (pdftex.def)             Requested size: 231.86214pt x 166.21805pt.
  [2]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 290.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 287.
  (/usr/local/texlive/2023/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 290.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 287.
  (/usr/local/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [3 <./Framework.jpg>]
-Underfull \hbox (badness 3780) in paragraph at lines 415--421
+)
+Underfull \vbox (badness 3068) has occurred while \output is active []
+
+ [3 <./Framework.jpg>]
+Underfull \hbox (badness 3780) in paragraph at lines 412--418
 \OT1/ptm/m/n/10 identity vec-tor for se-lect-ing the cor-re-spond-ing \style-
  []
 
 
-Overfull \hbox (4.4869pt too wide) in paragraph at lines 434--446
+Overfull \hbox (4.4869pt too wide) in paragraph at lines 431--443
  [][] 
  []
 
 [4] [5]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [6] (./ijcai23.bbl
+ [6] (./ijcai24.bbl
 Underfull \hbox (badness 1297) in paragraph at lines 39--42
 \OT1/ptm/m/n/10 Michele De Si-moni, and Emanuele Ghelfi.  A sur-
  []
@@ -534,26 +539,26 @@ Underfull \hbox (badness 3826) in paragraph at lines 176--179
 []\OT1/ptm/m/n/10 Zihan Zhou, Zi-jia Du, and So-mali
  []
 
-) [8] (./ijcai23.aux)
+) [8] (./ijcai24.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package rerunfilecheck Info: File `ijcai23.out' has not changed.
+Package rerunfilecheck Info: File `ijcai24.out' has not changed.
 (rerunfilecheck)             Checksum: 1B28E2177966585FDD70FA85B887AF66;1946.
  ) 
 Here is how much of TeX's memory you used:
- 12289 strings out of 476025
- 195947 string characters out of 5790017
- 1894388 words of memory out of 5000000
- 32482 multiletter control sequences out of 15000+600000
+ 12313 strings out of 476025
+ 196107 string characters out of 5790017
+ 1896388 words of memory out of 5000000
+ 32506 multiletter control sequences out of 15000+600000
  533821 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,18n,76p,346b,540s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,18n,76p,346b,544s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on ijcai23.pdf (8 pages, 451573 bytes).
+Output written on ijcai24.pdf (8 pages, 451578 bytes).
 PDF statistics:
- 306 PDF objects out of 1000 (max. 8388607)
- 260 compressed objects within 3 object streams
+ 304 PDF objects out of 1000 (max. 8388607)
+ 258 compressed objects within 3 object streams
  80 named destinations out of 1000 (max. 500000)
  110 words of extra memory for PDF output out of 10000 (max. 10000000)
 
