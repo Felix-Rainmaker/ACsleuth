@@ -5,13 +5,6 @@ Charu~C Aggarwal.
 \newblock {\em An introduction to outlier analysis}.
 \newblock Springer, 2017.
 
-\bibitem[\protect\citeauthoryear{Amdeberhan \bgroup \em et al.\egroup
-  }{2012}]{amdeberhan2012ramanujan}
-Tewodros Amdeberhan, Olivier Espinosa, Ivan Gonzalez, Marshall Harrison,
-  Victor~H Moll, and Armin Straub.
-\newblock Ramanujan's master theorem.
-\newblock {\em The Ramanujan Journal}, 29:103--120, 2012.
-
 \bibitem[\protect\citeauthoryear{Amodio \bgroup \em et al.\egroup
   }{2019}]{dands}
 Matthew Amodio, David Van~Dijk, Krishnan Srinivasan, William~S Chen, Hussein
@@ -19,13 +12,6 @@ Matthew Amodio, David Van~Dijk, Krishnan Srinivasan, William~S Chen, Hussein
   Venkataswamy, et~al.
 \newblock Exploring single-cell data with deep multitasking neural networks.
 \newblock {\em Nature methods}, 16(11):1139--1145, 2019.
-
-\bibitem[\protect\citeauthoryear{Bradshaw and
-  Vignat}{2023}]{bradshaw2023operational}
-Zachary~P Bradshaw and Christophe Vignat.
-\newblock An operational calculus generalization of ramanujan's master theorem.
-\newblock {\em Journal of Mathematical Analysis and Applications},
-  523(2):127029, 2023.
 
 \bibitem[\protect\citeauthoryear{Cai \bgroup \em et al.\egroup }{2022}]{EDESC}
 Jinyu Cai, Jicong Fan, Wenzhong Guo, Shiping Wang, Yunhe Zhang, and Zhao Zhang.
@@ -89,11 +75,6 @@ Ishaan Gulrajani, Faruk Ahmed, Martin Arjovsky, Vincent Dumoulin, and Aaron~C
   Courville.
 \newblock Improved training of wasserstein gans.
 \newblock {\em Advances in neural information processing systems}, 30, 2017.
-
-\bibitem[\protect\citeauthoryear{Hoeffding}{1994}]{hoeffding1994probability}
-Wassily Hoeffding.
-\newblock Probability inequalities for sums of bounded random variables.
-\newblock {\em The collected works of Wassily Hoeffding}, pages 409--426, 1994.
 
 \bibitem[\protect\citeauthoryear{Hornung \bgroup \em et al.\egroup
   }{2016}]{hornung2016combining}

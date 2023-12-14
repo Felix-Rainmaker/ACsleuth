@@ -111,6 +111,7 @@ fourth@example.com
 }
 \fi
 
+
 \begin{document}
 
 \maketitle
@@ -149,9 +150,8 @@ from scRNA-seq empowers us to enhance detecting anomalous cells, then delve deep
 the exploration of their fine-grained subtypes.
 
 Motivated by deep learning, previous studies for scRNA-seq data mainly focus on cell 
-clustering and cell type annotation. The former aims to identify cell groups such as sczi-Desk \cite{sczi-Desk} 
-and scCNC \cite{scCNC}, and the latter simply annotates these groups based on marker genes or another prior 
-information such as ItClust \cite{ItClust}, scArches \cite{scArches}. 
+clustering and cell type annotation. The former aims to identify cell groups \cite{sczi-Desk,scCNC},
+and the latter simply annotates these groups based on marker genes or another prior information \cite{ItClust,scArches}. 
 However, both of aforementioned tasks are not ideally suited for fine-grained anomalous cells detection. 
 Anomaly detection naturally exhibits class-imbalance characteristics, while the challenge 
 in fine-grained anomaly detection lies in acquiring more precise representations of distinct cell types 
@@ -168,10 +168,11 @@ the same tissue but obtained from different patients, may be interfered by prono
 Additionally, data derived from different sequencing technologies exhibits heterogeneous distributions, while 
 compared with scRNA-seq,other sequencing technologies like scATAC-seq are even rarer \cite{RNAmore}.
 This dataset shift is commonly denoted as domain bias in computer vision, encompassing aspects 
-such as style differences,diverse sensory devices, etc \cite{domainada}. Both batch effects within the same sequencing technique data and the bias arising from different 
+such as style differences, diverse sensory devices, etc \cite{domainada}.
+Both batch effects within the same sequencing technique data and the bias arising from different 
 sequencing technologies contribute to domain bias \cite{ACE}. However, most previous studies failed to 
 recognize such shared characteristics between these two biases and tended to address them 
-independently, which are neither elegant nor efficient.
+independently, which aren't efficient.
 
 Besides, most of anomaly detection studies work solely on identifying anomalies within normal 
 samples, which often treating it as a class-imbalance binary classification task \cite{OA}. 
@@ -190,7 +191,6 @@ detection and batch correction for scRNA-seq data, named ACsleuth, aiming at
 subtyping anomalies from the raw data which contains various normal and diseased types of 
 cells. Our contributions are summarized as follows:
 \begin{itemize}
-
 \item Methodologically, we introduce an innovative workflow called ACsleuth, which contains 
 fine-grained anomalous cell detection. The anomaly detector is first trained 
 unsupervisedly on the reference dataset which has only normal samples, then we learn 
@@ -231,10 +231,11 @@ the target data due to their distinct reconstruction error. This is attributed t
 fact that the reference data for the anomaly detection task exclusively consists of 
 normal samples.
 Popular frameworks such as autoencoder (AE) \cite{odae}, generative adversarial 
-networks \cite{GANad} are widely used. Nevertheless, such GAN-based 
+networks (GAN) \cite{GANad} are widely used. Nevertheless, such GAN-based 
 models like \cite{EffGAN} still struggle with distinguishing multiple normal samples, and are prone to 
 occurring model-collapse during training. Additionally, AE frameworks exhibit limitations 
 handling the noisy or high-dimensional sparse data.
+
 \subsection{Single Cell RNA-Seq Data Subtyping}
 Single-cell subtyping aims to identify distinct subtypes within the same cell type, e.g., 
 tumors, which is similar to a broader task called cell annotation. The essence of two 
@@ -265,15 +266,16 @@ propose a pipeline comprising anomaly detection and fine-grained subtype detecti
 Notably, to the best of our knowledge, none of the previous works are designed for a 
 comprehensive workflow which contains such subtasks including anomaly detection and 
 anomalies detailed multi-classification.
+
+
+\section{Methods}
 \begin{figure}
     \centering
     \includegraphics[scale=0.20]{Framework.jpg}
     \caption{Illustration of ACsleuth. The overall model consists of GAN-based anomaly detection and batch effect correction modules and DESC clustering module for fine-grained anomalous cell detection.}
+    \label{fig:workflow}
 \end{figure}
-
-
-\section{Methods}
-We first give an overview of subtyping cells workflow, which can be divided into two main 
+We first give an overview of subtyping cells workflow as \Cref{fig:workflow}, which can be divided into two main 
 parts: anomaly detection and subtype clustering. We start with training the detector 
 unsupervisedly, as the reference dataset contains only normal cells. The target dataset 
 contains two kinds of labels: the two-class one for distinguishing between normal and 
@@ -281,14 +283,15 @@ anomalous cells, and the detailed one for categorizing subtypes of cells. Specif
 we exclusively leverage the subtyping module for anomalies discovered by the detector, 
 which we refer to as “pre-anomalies”. That means they may include a few “fake anomalies”. 
 ACsleuth consists of three modules, each dedicated to anomaly detection, batch effect correction and subtyping.
+
 \subsection{Detecting Anomaly Cells}
-ACsleuth detects anomalies based on learning the reconstruction of normal 
-samples in the reference datasets through the generative adversarial networks (GAN). 
-As the GAN model is specifically trained to reconstruct normal samples, 
+ACsleuth detects anomalies based on learning the reconstruction of normal samples in the reference datasets through GAN. 
+As ACsleuth is specifically trained to reconstruct normal samples, 
 anomalous cells in target datasets are more likely to hold larger reconstruction errors, 
 which are treated as an assessment criterion. 
 
-\textbf{Model Training.} Our GAN module (referred as \textit{module I}) consists of a generator and a discriminator. 
+\textbf{Model Training.}
+Our GAN module (referred as \textit{module I}) consists of a generator and a discriminator. 
 The generator can be subdivided into three distinct components: an encoder, a decoder and a memory block.
 To define the gene expression pattern, we employ the mathematical model similar to \cite{hornung2016combining}.
 Let $S^k$ denote the group of cells in the same batch $k$.
@@ -339,7 +342,8 @@ $\mathcal{L}_{\text{adv}}$ denotes the adversarial loss. $\alpha, \beta, \lambda
 Significantly, the discriminator's loss function contains of a gradient penalty factor,
 which promotes the stability of the adversarial training and reduces the risk of mode collapse \cite{wGANs}.
 
-\textbf{Anomaly Inference.} Let $\bm{\delta}_m^x \coloneqq \bm{x}_m - \widehat{\bm{x}}_m$, $\bm{\delta}_n^y \coloneqq \bm{y}_n - \widehat{\bm{y}}_n$
+\textbf{Anomaly Inference.}
+Let $\bm{\delta}_m^x \coloneqq \bm{x}_m - \widehat{\bm{x}}_m$, $\bm{\delta}_n^y \coloneqq \bm{y}_n - \widehat{\bm{y}}_n$
 denote the reconstruction errors of normal and anomaly samples.
 Motivated by the main idea that the reconstruction errors of anomaly cells are significantly larger than normal cells,
 we hope to maximize the discrepancy of $\bm{\delta}_m^x$ and $\bm{\delta}_n^y$.
@@ -359,7 +363,7 @@ Therefore, the objective for detecting anomalous and normal cells can be express
         \min_{\bm{\delta}_m^x, \bm{\delta}_n^y} \quad \mathcal{L}_p =  -MMD^2\left(\bm{\delta}_m^x, \bm{\delta}_n^y\right)
 \end{equation}
 In fact, it indicates we need to optimize a mapping function $f_s: \mathbb{R}^p \rightarrow \{0, 1\}$ that partitions unlabeled total samples $\bm{\delta}_{m+n}$ into $\bm{\delta}_m^x$ and $\bm{\delta}_n^y$, aiming to minimize $\mathcal{L}_p$.
-Therefore, we propose \Cref{th:opt_s} for transforming \eqref{eq:def}, and the proof is provided in \Cref{proof:opt_s}.
+Therefore, we propose \Cref{th:opt_s} for transforming \eqref{eq:def}, and the proof is provided in Supplementary.
 \begin{theorem}\label{th:opt_s}
 Define $s_i \coloneqq f_s(\bm{\delta}_i)$. The optimization \eqref{eq:def} have an equivalent form:
 \begin{equation}\label{eq:def_s}
@@ -381,7 +385,7 @@ For detecting anomalies, We aim to learn a predictor $f_p:\mathbb{R}^p \rightarr
 However, $\gamma(s_i, s_j): \{0, 1\} \times \{0, 1\} \rightarrow \mathbb{R}$ is discrete and doesn't exist gradients.
 A natural idea is to extend $\gamma$ to the continuous scenario, resulting in the function $\gamma_c(p_i, p_j): (0, 1) \times (0, 1) \rightarrow \mathbb{R}$.
 Here, we propose a potential $\gamma_c$ based on \Cref{th:gamma_c}, and the analytic properties of $\gamma_c$ everywhere indicate its strong smoothness, making it amenable to gradient descent optimization.
-The proof of \Cref{th:gamma_c} is available at \Cref{proof:gamma_c}.
+The proof of \Cref{th:gamma_c} is available at Supplementary.
 \begin{theorem}\label{th:gamma_c}
     For any given $m, n$, there always exists $\gamma_c$ that extends $\gamma$ to the continuous scenario and satisfies:
     \begin{enumerate}[(1)]
@@ -410,7 +414,7 @@ we can still ensure that the accuracy of prediction remains unaffected.
 From a mathematical perspective, ACsleuth satisfies \Cref{th:trans}, which indicates the cross-domain transfer error can be bounded by sample size $n$.
 In practice, when we minimize the objective \eqref{eq:def}, that is, when maximizing this batch-effect-independent $MMD^2\left(P_{\delta^{y*}}, P_{\delta^{x*}}\right)$.
 Therefore, \Cref{th:trans} can indicate inherent transferability to realize cross-domain detection.
-The proof of \Cref{th:trans} is provided in \Cref{proof:trans}.
+The proof of \Cref{th:trans} is provided in Supplementary.
 \begin{theorem}\label{th:trans}
 We assume the proportion of normal samples $\bm{x}_m$ to anomaly samples $\bm{y}_n$ satisfies $m/n = C \geq 1$, where $C$ is a constant but not large enough.
 If \Cref{as:pattern} is valid and MMD is induced by linear kernels, for any samples $\bm{x}_m, \bm{y}_n$
@@ -744,251 +748,6 @@ detection workflow for tabular data generalized to another fields.
 %% The file named.bst is a bibliography style file for BibTeX 0.99c
 \bibliographystyle{named}
 \bibliography{ijcai24}
-
-\appendix
-
-\section{Proofs}
-
-\subsection{Proof of \Cref{th:opt_s}}\label{proof:opt_s}
-\begin{proof}
-\cite{gretton2012kernel} provides an unbiased empirical MMD for samples:
-\begin{equation}\label{eq:MMD_XY}
-    \begin{aligned}
-        & MMD^2\left(\bm{\delta}_m^x, \bm{\delta}_n^y\right) = \frac{1}{m(m-1)}\sum_{i}^{m}\sum_{j\neq i}^{m}k(\bm{\delta}_i^x, \bm{\delta}_j^x) \\
-        & + \frac{1}{n(n-1)}\sum_{i}^{n}\sum_{j\neq i}^{n}k(\bm{\delta}_i^y, \bm{\delta}_j^y) - \frac{2}{mn}\sum_{i}^{m}\sum_{j}^{n}k(\bm{\delta}_i^x, \bm{\delta}_j^y) \\
-        & = \sum_{i}^{m+n}\sum_{j\neq i}^{m+n}k(\bm{\delta}_i, \bm{\delta}_j)\gamma(s_i, s_j)
-    \end{aligned}
-\end{equation}
-where $\bm{\delta}_i$ denotes unlabeled total samples, and the adjustment coefficients $\gamma$ are defined as:
-\begin{equation}
-    \gamma(s_i, s_j) =
-    \begin{cases}
-        \frac{1}{m(m-1)}, & s_i = s_j = 0 \\
-        \frac{1}{n(n-1)}, & s_i = s_j = 1 \\
-        \frac{-1}{mn}, & s_i \neq s_j
-    \end{cases}
-\end{equation}
-If $s_i = 1$, sample $i$ will be classified as anomaly; otherwise, it will be classified as normal.
-By the way, \Cref{proof:opt_s} has been proved.
-\end{proof}
-
-
-\subsection{Proof of \Cref{th:gamma_c}}\label{proof:gamma_c}
-\begin{proof}
-According to \eqref{eq:gamma}, we define the two-dimensional sequence $\{\gamma_{mn}\}$ as:
-\begin{equation}
-    \begin{gathered}
-        \gamma_{00} = \frac{1}{m(m-1)}, \quad \gamma_{01} = \gamma_{10} = \frac{-1}{mn} \gamma_{11} = \frac{1}{n(n-1)} \\
-        \forall i, j \geq 2, \quad \gamma_{ij} = 0
-    \end{gathered}
-\end{equation}
-The ordinary generating function $H(x, y)$ for $\{\gamma_{mn}\}$ is:
-\begin{equation}
-    H(x, y) = \sum_{i=0}^{\infty}\sum_{j=0}^{\infty}\gamma_{ij}x^iy^j
-\end{equation}
-where $(x, y) \in \mathbb{D} \coloneqq [0, 1]\times [0, 1]$.
-
-According to \cite{bradshaw2023operational,amdeberhan2012ramanujan}, the extension of Ramanujan's master theorem in the $k$-dimensional case have been proposed as \Cref{le:MultiRam}.
-\begin{lemma}\label{le:MultiRam}
-    If a complex-valued function $f(x_1, \cdots, x_k)$ has an expansion:
-    \begin{equation}
-        f(x_1, \cdots, x_k) = \sum_{n_1, \cdots, n_k}^{\infty} g(n_1, \cdots, n_k) \prod_{i=1}^k \frac{(-1)^{n_i}}{n_i!} x_i^{n_i}
-    \end{equation}
-    where $g(n_1, \cdots, n_k)$ is a continuously analytic function everywhere, 
-    then the $k$-dimensional Mellin transform satisfies a multivariate version of Ramanujan's master theorem as follows:
-    \begin{equation}
-        \begin{aligned}
-            & \mathcal{M}[f(x_1, \cdots, x_k)](s_1, \cdots, s_k) \\
-            & \coloneqq \int_{\mathbb{R}_+^k} \prod_{i=1}^{k} x_i^{s_i-1} f(x_1, \cdots, x_k) dx_1 \cdots dx_k \\
-            & = \prod_{i=1}^{k} \Gamma(s_i)g(-s_1, \cdots, -s_k)
-        \end{aligned}
-    \end{equation}
-    The integral is convergent when $0 < Re(s_i) <1, \forall i \in \{1,\cdots,k\}$.
-\end{lemma}
-
-Note that $H(-x, -y)$ satisfies:
-\begin{equation}
-    H(-x, -y) = \sum_{i=0}^{\infty}\sum_{j=0}^{\infty}\gamma_{ij}\Gamma(i+1)\Gamma(j+1)\frac{(-1)^i(-1)^j}{i!j!}x^iy^j
-\end{equation}
-By \Cref{le:MultiRam}, the $k$-dimensional Mellin transform follows:
-\begin{equation}
-    \begin{aligned}
-        & \mathcal{M}[H(-x, -y)](s, t) \\
-        & \coloneqq \int_{\mathbb{D}} x^{s-1}y^{t-1} H(-x, -y) dxdy \\
-        & = \Gamma(s)\Gamma(t)\Gamma(1-s)\Gamma(1-t) \gamma_c(-s, -t)\\
-        & = \frac{\pi^2}{\sin\pi s \sin\pi t} \gamma_c(-s, -t)
-    \end{aligned}
-\end{equation}
-where $\gamma_c(s, t)$ is exactly the extension of sequence $\gamma_{ij}$ in the continuous scenario.
-Ultimately, by solving the definite integral, we can obtain:
-\begin{equation}
-    \begin{aligned}
-        & \frac{\pi^2}{\sin\pi s \sin\pi t}\gamma_c(-s, -t) \\
-        & = \int_{\mathbb{D}} x^{s-1}y^{t-1} H(-x, -y) dxdy \\
-        & = \int_{\mathbb{D}} \sum_{i=0}^{\infty}\sum_{j=0}^{\infty}\gamma_{ij}x^{i+s-1}y^{j+t-1} dxdy \\
-        & = \int_{\mathbb{D}} (\gamma_{00}x^{s-1}y^{t-1} + \gamma_{10}x^{s}y^{t-1} + \gamma_{01}x^{s-1}y^{t} + \gamma_{11}x^sy^t) dxdy \\
-        & = \gamma_{00}\frac{x^s}{s}\bigg|_0^1\frac{y^t}{t}\bigg|_0^1 + \gamma_{10}\frac{x^{s+1}}{s+1}\bigg|_0^1\frac{y^t}{t}\bigg|_0^1 + \gamma_{01}\frac{x^s}{s}\bigg|_0^1\frac{y^{t+1}}{t+1}\bigg|_0^1 + \gamma_{11}\frac{x^{s+1}}{s+1}\bigg|_0^1\frac{y^{t+1}}{t+1}\bigg|_0^1 \\
-        & = \frac{[m(m-1)]^{-1}}{st}+\frac{(mn)^{-1}}{(s+1)t}+\frac{(mn)^{-1}}{s(t+1)}+\frac{[n(n-1)]^{-1}}{(s+1)(t+1)}
-    \end{aligned}
-\end{equation}
-By replacing $-s$ and $-t$, the original theorem is thereby proven.
-\end{proof}
-
-
-\subsection{Proof of \Cref{th:trans}}\label{proof:trans}
-\begin{proof}
-Let the reference samples belong to batch $k$ and the target samples belong to batch $k^\prime$.
-If \Cref{as:pattern} holds, the reference samples $\bm{\zeta}_l$ satisfy:
-\begin{equation}
-    \begin{cases}
-        & \bm{\zeta}_l = \bm{\zeta}_l^* + \bm{b}_l^k + \bm{\epsilon}_l \\
-        &  \widehat{\bm{\zeta}}_l \coloneqq G(\bm{\zeta}_l) = \widehat{\bm{\zeta}}_l^* + \bm{b}_l^k
-    \end{cases}
-\end{equation}
-where $\widehat{\bm{\zeta}}_m^* \sim P_{\widehat{\bm{\zeta}}^*}, \bm{b}_l^k \sim P_{\bm{b}^k}$, and $l$ is the reference sample size.
-Because the generator doesn't learn the distribution of random noise, $\widehat{\bm{\zeta}}_l$ excludes $\bm{\epsilon}_l$.
-
-Considering that the target samples $\widehat{\bm{y}}_n, \widehat{\bm{x}}_m$ are reconstructed with the reference information,
-\begin{equation}
-    \begin{cases}
-        & \bm{x}_m = \bm{x}_m^* + \bm{b}_m^{k^\prime} + \bm{\epsilon}_m \\
-        & \widehat{\bm{x}}_m = \widehat{\bm{\zeta}}_m^* + \bm{b}_m^k \\
-        & \bm{y}_n = \bm{y}_n^* + \bm{b}_n^{k^\prime} + \bm{\epsilon}_n \\
-        & \widehat{\bm{y}}_n = \widehat{\bm{\zeta}}_n^* + \bm{b}_n^k 
-    \end{cases}
-\end{equation}
-where $\widehat{\bm{\zeta}}_m^*, \widehat{\bm{\zeta}}_n^* \stackrel{i.i.d.}{\sim} P_{\widehat{\bm{\zeta}}^*}$,
-$\bm{b}_m^k, \bm{b}_n^k \stackrel{i.i.d.}{\sim} P_{\bm{b}^k}$ and $\bm{b}_m^{k^\prime}, \bm{b}_n^{k^\prime} \stackrel{i.i.d.}{\sim} P_{\bm{b}^{k^\prime}}$.
-Subsequently, the reconstruction errors satisfy:
-\begin{equation}
-    \begin{cases}
-        & \bm{\delta}_m^x = \bm{x}_m - \widehat{\bm{x}}_m = \bm{x}_m^* - \widehat{\bm{\zeta}}_m^* + \bm{b}_m^{k^\prime} - \bm{b}_m^k + \bm{\epsilon}_m \\
-        & \bm{\delta}_n^y = \bm{y}_n - \widehat{\bm{y}}_n = \bm{y}_n^* - \widehat{\bm{\zeta}}_n^* + \bm{b}_n^{k^\prime} - \bm{b}_n^k + \bm{\epsilon}_n
-    \end{cases}
-\end{equation}
-For a more concise representation, we define:
-\begin{equation}
-    \begin{cases}
-        & \bm{\delta}_m^{x*} = \bm{x}_m^* - \widehat{\bm{\zeta}}_m^*, \quad \bm{\delta}_m^b = \bm{b}_m^{k^\prime} - \bm{b}_m^k + \bm{\epsilon}_m \\
-        & \bm{\delta}_m^{y*} = \bm{y}_n^* - \widehat{\bm{\zeta}}_n^*, \quad \bm{\delta}_n^b = \bm{b}_n^{k^\prime} - \bm{b}_n^k + \bm{\epsilon}_n
-    \end{cases}
-\end{equation}
-
-Under these symbol representations, if MMD is induced by linear kernel, the kernel is expandable as follows:
-\begin{equation}
-    \begin{aligned}
-        & k(\bm{\delta}_i^x, \bm{\delta}_j^x) = k(\bm{\delta}_i^{x*}, \bm{\delta}_j^{x*}) + k(\bm{\delta}_i^b, \bm{\delta}_j^b) + k(\bm{\delta}_i^{x*}, \bm{\delta}_j^b) + k(\bm{\delta}_i^b, \bm{\delta}_j^{x*}) \\
-        & k(\bm{\delta}_i^y, \bm{\delta}_j^y) = k(\bm{\delta}_i^{y*}, \bm{\delta}_j^{y*}) + k(\bm{\delta}_i^b, \bm{\delta}_j^b) + k(\bm{\delta}_i^{y*}, \bm{\delta}_j^b) + k(\bm{\delta}_i^b, \bm{\delta}_j^{y*}) \\
-        & k(\bm{\delta}_i^x, \bm{\delta}_j^y) = k(\bm{\delta}_i^{x*}, \bm{\delta}_j^{y*}) + k(\bm{\delta}_i^b, \bm{\delta}_j^b) + k(\bm{\delta}_i^{x*}, \bm{\delta}_j^b) + k(\bm{\delta}_i^b, \bm{\delta}_j^{y*})
-    \end{aligned}
-\end{equation}
-Subsequently, considering \eqref{eq:MMD_XY}, therefore it follows that:
-\begin{equation}\label{eq:MMDMMD}
-    \begin{aligned}
-        MMD^2\left(\bm{\delta}_m^x, \bm{\delta}_n^y\right) = &
-        \frac{1}{m(m-1)}\sum_{i}^{m}\sum_{j\neq i}^{m}k(\bm{\delta}_i^x, \bm{\delta}_j^x)
-        + \frac{1}{n(n-1)}\sum_{i}^{n}\sum_{j\neq i}^{n}k(\bm{\delta}_i^y, \bm{\delta}_j^y) \\
-        & - \frac{2}{mn}\sum_{i}^{m}\sum_{j}^{n}k(\bm{\delta}_i^x, \bm{\delta}_j^y) \\
-        = & MMD^2\left(\bm{\delta}_m^{x*}, \bm{\delta}_n^{y*}\right) + MMD^2\left(\bm{\delta}_m^b, \bm{\delta}_n^b\right) + 2R_{mn}^x + 2R_{mn}^y
-    \end{aligned}
-\end{equation}
-where the remainder term $R_{mn}^x, R_{mn}^y$ are defined as:
-\begin{equation}
-    \begin{aligned}
-        R_{mn}^x & \coloneqq \frac{1}{m(m-1)}\sum_{i}^{m}\sum_{j\neq i}^{m}{\bm{\delta}_i^b}^T \bm{\delta}_j^{x*} - \frac{1}{n^2}\sum_{i}^{n}\sum_{j}^{n}{\bm{\delta}_i^b}^T \bm{\delta}_j^{x*} \\
-        R_{mn}^y & \coloneqq \frac{1}{n(n-1)}\sum_{i}^{m}\sum_{j\neq i}^{m}{\bm{\delta}_i^b}^T \bm{\delta}_j^{y*} - \frac{1}{m^2}\sum_{i}^{m}\sum_{j}^{m}{\bm{\delta}_i^b}^T \bm{\delta}_j^{y*}
-    \end{aligned}
-\end{equation}
-
-Before analyzing the transfer error of $MMD^2\left(\bm{\delta}_m^x, \bm{\delta}_n^y\right)$, let's first discuss the convergence of each term in \eqref{eq:MMDMMD}.
-For the first and second terms, we analyze them using the following \Cref{le:MMDcon} \cite{gretton2012kernel}.
-\begin{lemma}\label{le:MMDcon}
-    Assume $0 \leq k(\bm{x}_i, \bm{x}_j) \leq K $. Then:
-    \begin{equation}
-        \mathbb{P}\left(\big|MMD^2(\bm{X}, \bm{Y}) - MMD^2(p, q)\big| \geq \varepsilon \right) \leq 2\exp\left(\frac{-\varepsilon^2mn}{8K^2(m+n)}\right)
-    \end{equation}
-    where $\bm{x}_i \sim p, \bm{y}_j \sim q$.
-\end{lemma}
-Then, we obtain:
-\begin{equation}\label{eq:1st2nd}
-    \begin{gathered}
-        \mathbb{P}\left(\big|MMD^2(\bm{\delta}_m^{x*}, \bm{\delta}_n^{y*}) - MMD^2(P_{\bm{\delta}^{x*}}, P_{\bm{\delta}^{y*}}) \big| \geq \varepsilon \right) \leq 2\exp\left(\frac{-Cn\varepsilon^2}{8(1+C){K_+^x}^2}\right) \\
-        \mathbb{P}\left(\big|MMD^2(\bm{\delta}_m^{b}, \bm{\delta}_n^{b}) - 0 \big| \geq \varepsilon \right) \leq 2\exp\left(\frac{-Cn\varepsilon^2}{8(1+C){K_+^b}^2}\right)
-    \end{gathered}
-\end{equation}
-where $K_+^x \coloneqq \sup_{ij} k(\bm{\delta}_i^{x*}, \bm{\delta}_j^{x*})$, $K_+^b \coloneqq \sup_{ij} k(\bm{\delta}_i^{b}, \bm{\delta}_j^{b})$.
-
-For the third term $R_{mn}^x$ in \eqref{eq:MMDMMD}, we employ the following \Cref{le:1/nepsilon} to discuss the convergence, and the proof is available at \Cref{proof:1/nepsilon}.
-\begin{lemma}\label{le:1/nepsilon}
-    For any random variables $x_1, x_2, \cdots, x_k$, they always satisfy:
-    \begin{equation}
-        \mathbb{P}\left(\Bigg|\sum_{i=1}^{k}x_i\Bigg| \geq \varepsilon\right) \leq \mathbb{P}\left(\sum_{i=1}^{k}|x_i| \geq \varepsilon\right) \leq \sum_{i=1}^{k}\mathbb{P}\left(|x_i| \geq \frac{\varepsilon}{k}\right)
-    \end{equation}
-    where $\varepsilon \geq 0$, $k \in \mathbb{Z}_+$
-\end{lemma}
-Considering that $\bm{\delta}^b$ and $\bm{\delta}^{x*}$ are mutually independent, we define the random variable $\xi \coloneqq {\bm{\delta}^b}^T\bm{\delta}^{x*} \in \mathbb{R}$.
-According to \Cref{le:1/nepsilon} and Hoeffding's Inequality \cite{hoeffding1994probability}, $R_{mn}^x$ can be bounded as follows:
-\begin{equation}\label{eq:3rd}
-    \begin{aligned}
-        & \mathbb{P}(\big|R_{mn}^x\big| \geq \varepsilon) = \mathbb{P}\left(\Bigg| \frac{1}{m(m-1)}\sum_{i=1}^{m(m-1)}\xi_i - \frac{1}{n^2}\sum_{j=1}^{n^2}\xi_j\Bigg| \geq \varepsilon\right) \\
-        & = \mathbb{P}\left(\Bigg| \frac{1}{m(m-1)}\sum_{i=1}^{m(m-1)}\xi_i - \mathbb{E}(\xi) + \mathbb{E}(\xi) - \frac{1}{n^2}\sum_{j=1}^{n^2}\xi_j\Bigg| \geq \varepsilon\right) \\
-        & \leq \mathbb{P}\left(\Bigg| \frac{1}{m(m-1)}\sum_{i=1}^{m(m-1)}\xi_i - \mathbb{E}(\xi) \Bigg| \geq \frac{\varepsilon}{2}\right) + \mathbb{P}\left(\Bigg| \frac{1}{n^2}\sum_{j=1}^{n^2}\xi_j - \mathbb{E}(\xi) \Bigg| \geq \frac{\varepsilon}{2}\right) \\
-        & \leq 2\exp\left(\frac{-2m(m-1)(\varepsilon/2)^2}{{K_+^\xi}^2}\right) + 2\exp\left(\frac{-2n^2(\varepsilon/2)^2}{{K_+^\xi}^2}\right) \\
-        & \leq 4\exp\left(\frac{-m(m-1)\varepsilon^2}{2{K_+^\xi}^2}\right)
-    \end{aligned}
-\end{equation}
-where $K_+^\xi \coloneqq \sup_{i,j} (\xi_i - \xi_j)$
-
-Similarly, for the forth term $R_{mn}^y$ in \eqref{eq:MMDMMD}, we define the random variable $\theta \coloneqq {\bm{\delta}^b}^T\bm{\delta}^{y*} \in \mathbb{R}$, 
-and $K_+^\theta \coloneqq \sup_{i,j} (\theta_i - \theta_j)$. 
-Thus, $R_{mn}^y$ can be bounded as follows:
-\begin{equation}\label{eq:4th}
-    \mathbb{P}(\big|R_{mn}^y\big| \geq \varepsilon) \leq 4\exp\left(\frac{-m^2\varepsilon^2}{2{K_+^\theta}^2}\right)
-\end{equation}
-
-Combined \eqref{eq:1st2nd}, \eqref{eq:3rd} and \eqref{eq:4th}, we also employ \Cref{le:1/nepsilon} to obtain:
-\begin{equation}
-    \begin{aligned}
-        & \mathbb{P}\left(\big| MMD^2(\bm{\delta}_m^x, \bm{\delta}_n^y) - MMD^2(P_{\bm{\delta}^{x*}}, P_{\bm{\delta}^{y*}}) \big| \geq \varepsilon \right) \\
-        & \leq \mathbb{P}\left(\big|MMD^2(\bm{\delta}_m^{x*}, \bm{\delta}_n^{y*}) - MMD^2(P_{\bm{\delta}^{x*}}, P_{\bm{\delta}^{y*}}) \big| \geq \frac{\varepsilon}{4} \right) \\
-        & \quad + \mathbb{P}\left(\big|MMD^2(\bm{\delta}_m^{b}, \bm{\delta}_n^{b})\big| \geq \frac{\varepsilon}{4} \right) + \mathbb{P}(\big|2R_{mn}^x\big| \geq \frac{\varepsilon}{4}) + \mathbb{P}(\big|2R_{mn}^y\big| \geq \frac{\varepsilon}{4}) \\
-        & \leq 4\exp\left(\frac{-Cn\varepsilon^2}{128(1+C)K_+^2}\right) + 4\exp\left(\frac{-m(m-1)\varepsilon^2}{128K_+^2}\right) + 4\exp\left(\frac{-m^2\varepsilon^2}{128K_+^2}\right)
-    \end{aligned}
-\end{equation}
-where $K_+ \coloneqq \max\{K_+^x, K_+^b, K_+^\xi, K_+^\theta\}$.
-When $m > 1 + (1+C)^{-1}$, the following inequality always holds\footnote{In fact, this condition is always satisfied as long as there is more than only two normal sample.}:
-\begin{equation}
-    \frac{Cn}{1+C} < m(m-1) < m^2
-\end{equation}
-Finally, we can obtain:
-\begin{equation}
-    \mathbb{P}\left(\big| MMD^2(\bm{\delta}_m^x, \bm{\delta}_n^y) - MMD^2(P_{\bm{\delta}^{x*}}, P_{\bm{\delta}^{y*}}) \big| \geq \varepsilon \right) \leq 12\exp\left(\frac{-Cn\varepsilon^2}{128(1+C)K_+^2}\right)
-\end{equation}
-If $\alpha\coloneqq12, \beta\coloneqq(128K_+^2)^{-1}$, the original theorem will be proven.
-\end{proof}
-
-
-\subsection{Proof of \Cref{le:1/nepsilon}}\label{proof:1/nepsilon}
-\begin{proof}
-On one hand, according to the triangle inequality, we have:
-\begin{equation}
-    \Bigg|\sum_{i=1}^{k}x_i\Bigg| \leq \sum_{i=1}^{k}|x_i|
-\end{equation}
-which also indicates
-\begin{equation}
-    \left\{\Bigg|\sum_{i=1}^{k}x_i\Bigg| \geq \varepsilon\right\} \subset \left\{\sum_{i=1}^{k}|x_i| \geq \varepsilon\right\}
-\end{equation}
-
-On the other hand, the following relationship always holds:
-\begin{equation}
-    \left\{\sum_{i=1}^{k}|x_i| \geq \varepsilon\right\} \subset \bigcup_{i=1}^k \left\{|x_i| \geq \frac{\varepsilon}{k}\right\}
-\end{equation}
-Thus, we have:
-\begin{equation}
-    \mathbb{P}\left(\Bigg|\sum_{i=1}^{k}x_i\Bigg| \geq \varepsilon\right) \leq \mathbb{P}\left(\sum_{i=1}^{k}|x_i| \geq \varepsilon\right) \leq \sum_{i=1}^{k}\mathbb{P}\left(|x_i| \geq \frac{\varepsilon}{k}\right)
-\end{equation}
-
-\end{proof}
 
 \end{document}
 

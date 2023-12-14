@@ -1,0 +1,26 @@
+\begin{thebibliography}{1}
+
+\bibitem{gretton2012kernel}
+Arthur Gretton, Karsten~M Borgwardt, Malte~J Rasch, Bernhard Sch{\"o}lkopf, and
+  Alexander Smola.
+\newblock A kernel two-sample test.
+\newblock {\em The Journal of Machine Learning Research}, 13(1):723--773, 2012.
+
+\bibitem{bradshaw2023operational}
+Zachary~P Bradshaw and Christophe Vignat.
+\newblock An operational calculus generalization of ramanujan's master theorem.
+\newblock {\em Journal of Mathematical Analysis and Applications},
+  523(2):127029, 2023.
+
+\bibitem{amdeberhan2012ramanujan}
+Tewodros Amdeberhan, Olivier Espinosa, Ivan Gonzalez, Marshall Harrison,
+  Victor~H Moll, and Armin Straub.
+\newblock Ramanujan's master theorem.
+\newblock {\em The Ramanujan Journal}, 29:103--120, 2012.
+
+\bibitem{hoeffding1994probability}
+Wassily Hoeffding.
+\newblock Probability inequalities for sums of bounded random variables.
+\newblock {\em The collected works of Wassily Hoeffding}, pages 409--426, 1994.
+
+\end{thebibliography}
