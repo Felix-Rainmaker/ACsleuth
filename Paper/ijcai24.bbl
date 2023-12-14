@@ -5,176 +5,274 @@ Charu~C Aggarwal.
 \newblock {\em An introduction to outlier analysis}.
 \newblock Springer, 2017.
 
-\bibitem[\protect\citeauthoryear{Amodio \bgroup \em et al.\egroup }{2018}]{dands}
-Matthew Amodio, David~Van Dijk, Krishnan Srinivasan, William~S Chen, Hussein Mohsen, Kevin~R Moon, Allison Campbell, Yujiao Zhao, Xiaomei Wang, and Manjunatha Venkataswamy.
+\bibitem[\protect\citeauthoryear{Amdeberhan \bgroup \em et al.\egroup
+  }{2012}]{amdeberhan2012ramanujan}
+Tewodros Amdeberhan, Olivier Espinosa, Ivan Gonzalez, Marshall Harrison,
+  Victor~H Moll, and Armin Straub.
+\newblock Ramanujan's master theorem.
+\newblock {\em The Ramanujan Journal}, 29:103--120, 2012.
+
+\bibitem[\protect\citeauthoryear{Amodio \bgroup \em et al.\egroup
+  }{2019}]{dands}
+Matthew Amodio, David Van~Dijk, Krishnan Srinivasan, William~S Chen, Hussein
+  Mohsen, Kevin~R Moon, Allison Campbell, Yujiao Zhao, Xiaomei Wang, Manjunatha
+  Venkataswamy, et~al.
 \newblock Exploring single-cell data with deep multitasking neural networks.
-\newblock {\em Cold Spring Harbor Laboratory}, (11), 2018.
+\newblock {\em Nature methods}, 16(11):1139--1145, 2019.
+
+\bibitem[\protect\citeauthoryear{Bradshaw and
+  Vignat}{2023}]{bradshaw2023operational}
+Zachary~P Bradshaw and Christophe Vignat.
+\newblock An operational calculus generalization of ramanujan's master theorem.
+\newblock {\em Journal of Mathematical Analysis and Applications},
+  523(2):127029, 2023.
 
 \bibitem[\protect\citeauthoryear{Cai \bgroup \em et al.\egroup }{2022}]{EDESC}
 Jinyu Cai, Jicong Fan, Wenzhong Guo, Shiping Wang, Yunhe Zhang, and Zhao Zhang.
 \newblock Efficient deep embedded subspace clustering.
-\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pages 1--10, 2022.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 1--10, 2022.
 
 \bibitem[\protect\citeauthoryear{Chen \bgroup \em et al.\egroup }{2017}]{odae}
 Jinghui Chen, Saket Sathe, Charu Aggarwal, and Deepak Turaga.
 \newblock Outlier detection with autoencoder ensembles.
-\newblock In {\em Proceedings of the 2017 SIAM International Conference on Data Mining (SDM)}, pages 90--98, 2017.
+\newblock In {\em Proceedings of the 2017 SIAM International Conference on Data
+  Mining (SDM)}, pages 90--98, 2017.
 
-\bibitem[\protect\citeauthoryear{Chen \bgroup \em et al.\egroup }{2020}]{sczi-Desk}
+\bibitem[\protect\citeauthoryear{Chen \bgroup \em et al.\egroup
+  }{2020}]{sczi-Desk}
 Liang Chen, Weinan Wang, Yuyao Zhai, and Minghua Deng.
-\newblock Deep soft k-means clustering with self-training for single-cell rna sequence data.
+\newblock Deep soft k-means clustering with self-training for single-cell rna
+  sequence data.
 \newblock {\em NAR Genomics and Bioinformatics}, 2(2), 2020.
 
-\bibitem[\protect\citeauthoryear{Cheng \bgroup \em et al.\egroup }{2023}]{Polyphony}
+\bibitem[\protect\citeauthoryear{Cheng \bgroup \em et al.\egroup
+  }{2023}]{Polyphony}
 Furui Cheng, Mark~S Keller, Huamin Qu, Nils Gehlenborg, and Qianwen Wang.
-\newblock Polyphony: an interactive transfer learning framework for single-cell data analysis.
-\newblock {\em IEEE Transactions on Visualization and Computer Graphics}, 29(1):591--601, 2023.
+\newblock Polyphony: an interactive transfer learning framework for single-cell
+  data analysis.
+\newblock {\em IEEE Transactions on Visualization and Computer Graphics},
+  29(1):591--601, 2023.
 
-\bibitem[\protect\citeauthoryear{De~Falco \bgroup \em et al.\egroup }{2023}]{SCEVAN}
-Antonio De~Falco, Francesca Caruso, Xiao-Dong Su, Antonio Iavarone, and Michele Ceccarelli.
-\newblock A variational algorithm to detect the clonal copy number substructure of tumors from scrna-seq data.
+\bibitem[\protect\citeauthoryear{De~Falco \bgroup \em et al.\egroup
+  }{2023}]{SCEVAN}
+Antonio De~Falco, Francesca Caruso, Xiao-Dong Su, Antonio Iavarone, and Michele
+  Ceccarelli.
+\newblock A variational algorithm to detect the clonal copy number substructure
+  of tumors from scrna-seq data.
 \newblock {\em Nature Communications}, 14(1):1074, 2023.
 
-\bibitem[\protect\citeauthoryear{Di~Mattia \bgroup \em et al.\egroup }{2019}]{GANad}
+\bibitem[\protect\citeauthoryear{Di~Mattia \bgroup \em et al.\egroup
+  }{2019}]{GANad}
 Federico Di~Mattia, Paolo Galeone, Michele De~Simoni, and Emanuele Ghelfi.
 \newblock A survey on gans for anomaly detection.
 \newblock {\em arXiv preprint arXiv:1906.11632}, 2019.
 
-\bibitem[\protect\citeauthoryear{Gao \bgroup \em et al.\egroup }{2021}]{CopyKAT}
-Ruli Gao, Shanshan Bai, Ying~C Henderson, Yiyun Lin, Aislyn Schalck, Yun Yan, Tapsi Kumar, Min Hu, Emi Sei, Alexander Davis, et~al.
-\newblock Delineating copy number and clonal substructure in human tumors from single-cell transcriptomes.
+\bibitem[\protect\citeauthoryear{Gao \bgroup \em et al.\egroup
+  }{2021}]{CopyKAT}
+Ruli Gao, Shanshan Bai, Ying~C Henderson, Yiyun Lin, Aislyn Schalck, Yun Yan,
+  Tapsi Kumar, Min Hu, Emi Sei, Alexander Davis, et~al.
+\newblock Delineating copy number and clonal substructure in human tumors from
+  single-cell transcriptomes.
 \newblock {\em Nature biotechnology}, 39(5):599--608, 2021.
 
-\bibitem[\protect\citeauthoryear{Gulrajani \bgroup \em et al.\egroup }{2017}]{wGANs}
-Ishaan Gulrajani, Faruk Ahmed, Martin Arjovsky, Vincent Dumoulin, and Aaron~C Courville.
+\bibitem[\protect\citeauthoryear{Gretton \bgroup \em et al.\egroup
+  }{2012}]{gretton2012kernel}
+Arthur Gretton, Karsten~M Borgwardt, Malte~J Rasch, Bernhard Sch{\"o}lkopf, and
+  Alexander Smola.
+\newblock A kernel two-sample test.
+\newblock {\em The Journal of Machine Learning Research}, 13(1):723--773, 2012.
+
+\bibitem[\protect\citeauthoryear{Gulrajani \bgroup \em et al.\egroup
+  }{2017}]{wGANs}
+Ishaan Gulrajani, Faruk Ahmed, Martin Arjovsky, Vincent Dumoulin, and Aaron~C
+  Courville.
 \newblock Improved training of wasserstein gans.
 \newblock {\em Advances in neural information processing systems}, 30, 2017.
 
+\bibitem[\protect\citeauthoryear{Hoeffding}{1994}]{hoeffding1994probability}
+Wassily Hoeffding.
+\newblock Probability inequalities for sums of bounded random variables.
+\newblock {\em The collected works of Wassily Hoeffding}, pages 409--426, 1994.
+
+\bibitem[\protect\citeauthoryear{Hornung \bgroup \em et al.\egroup
+  }{2016}]{hornung2016combining}
+Roman Hornung, Anne-Laure Boulesteix, and David Causeur.
+\newblock Combining location-and-scale batch effect adjustment with data
+  cleaning by latent factor adjustment.
+\newblock {\em BMC bioinformatics}, 17:1--19, 2016.
+
 \bibitem[\protect\citeauthoryear{Hu \bgroup \em et al.\egroup }{2020}]{ItClust}
 Jian Hu, Xiangjie Li, Gang Hu, Yafei Lyu, and Mingyao Li.
-\newblock Iterative transfer learning with neural network for clustering and cell type classification in single-cell rna-seq analysis.
+\newblock Iterative transfer learning with neural network for clustering and
+  cell type classification in single-cell rna-seq analysis.
 \newblock {\em Nature Machine Intelligence}, 2(10):1--12, 2020.
 
-\bibitem[\protect\citeauthoryear{Kiselev \bgroup \em et al.\egroup }{2018}]{scmap}
+\bibitem[\protect\citeauthoryear{Kiselev \bgroup \em et al.\egroup
+  }{2018}]{scmap}
 Vladimir~Yu Kiselev, Andrew Yiu, and Martin Hemberg.
 \newblock scmap: projection of single-cell rna-seq data across data sets.
 \newblock {\em Nature methods}, 15(5):359--362, 2018.
 
+\bibitem[\protect\citeauthoryear{Kolouri \bgroup \em et al.\egroup
+  }{2016}]{kolouri2016sliced}
+Soheil Kolouri, Yang Zou, and Gustavo~K Rohde.
+\newblock Sliced wasserstein kernels for probability distributions.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 5258--5267, 2016.
+
 \bibitem[\protect\citeauthoryear{Li \bgroup \em et al.\egroup }{2020}]{DESC}
-Xiangjie Li, Kui Wang, Yafei Lyu, Huize Pan, Jingxiao Zhang, Dwight Stambolian, Katalin Susztak, Muredach~P Reilly, Gang Hu, and Mingyao Li.
-\newblock Deep learning enables accurate clustering with batch effect removal in single-cell rna-seq analysis.
+Xiangjie Li, Kui Wang, Yafei Lyu, Huize Pan, Jingxiao Zhang, Dwight Stambolian,
+  Katalin Susztak, Muredach~P Reilly, Gang Hu, and Mingyao Li.
+\newblock Deep learning enables accurate clustering with batch effect removal
+  in single-cell rna-seq analysis.
 \newblock {\em Nature communications}, 11(1):2338, 2020.
 
 \bibitem[\protect\citeauthoryear{Li \bgroup \em et al.\egroup }{2022}]{CAMLU}
 Ziyi Li, Yizhuo Wang, Irene Ganan-Gomez, Simona Colla, and Kim-Anh Do.
-\newblock A machine learning-based method for automatically identifying novel cells in annotating single-cell rna-seq data.
+\newblock A machine learning-based method for automatically identifying novel
+  cells in annotating single-cell rna-seq data.
 \newblock {\em Bioinformatics}, 38(21):4885--4892, 2022.
 
 \bibitem[\protect\citeauthoryear{Liu \bgroup \em et al.\egroup }{2021}]{RCA}
 Boyang Liu, Ding Wang, Kaixiang Lin, Pang-Ning Tan, and Jiayu Zhou.
 \newblock Rca: A deep collaborative autoencoder approach for anomaly detection.
-\newblock In Zhi-Hua Zhou, editor, {\em Proceedings of the Thirtieth International Joint Conference on Artificial Intelligence, {IJCAI-21}}, pages 1505--1511. International Joint Conferences on Artificial Intelligence Organization, 8 2021.
+\newblock In Zhi-Hua Zhou, editor, {\em Proceedings of the Thirtieth
+  International Joint Conference on Artificial Intelligence, {IJCAI-21}}, pages
+  1505--1511. International Joint Conferences on Artificial Intelligence
+  Organization, 8 2021.
 \newblock Main Track.
 
-\bibitem[\protect\citeauthoryear{Liznerski \bgroup \em et al.\egroup }{2020}]{liznerski}
-Philipp Liznerski, Lukas Ruff, Robert~A Vandermeulen, Billy~Joe Franks, Marius Kloft, and Klaus-Robert M{\"u}ller.
+\bibitem[\protect\citeauthoryear{Liznerski \bgroup \em et al.\egroup
+  }{2020}]{liznerski}
+Philipp Liznerski, Lukas Ruff, Robert~A Vandermeulen, Billy~Joe Franks, Marius
+  Kloft, and Klaus-Robert M{\"u}ller.
 \newblock Explainable deep one-class classification.
 \newblock {\em arXiv preprint arXiv:2007.01760}, 2020.
 
-\bibitem[\protect\citeauthoryear{Lotfollahi \bgroup \em et al.\egroup }{2022}]{scArches}
-Mohammad Lotfollahi, Mohsen Naghipourfar, Malte~D. Luecken, Matin Khajavi, Maren Buettner, Marco Wagenstetter, Ziga Avsec, Adam Gayoso, Nir Yosef, and Marta Interlandi.
+\bibitem[\protect\citeauthoryear{Lotfollahi \bgroup \em et al.\egroup
+  }{2022}]{scArches}
+Mohammad Lotfollahi, Mohsen Naghipourfar, Malte~D Luecken, Matin Khajavi, Maren
+  B{\"u}ttner, Marco Wagenstetter, {\v{Z}}iga Avsec, Adam Gayoso, Nir Yosef,
+  Marta Interlandi, et~al.
 \newblock Mapping single-cell data to reference atlases by transfer learning.
-\newblock {\em Nature biotechnology}, (1):40, 2022.
+\newblock {\em Nature biotechnology}, 40(1):121--130, 2022.
 
 \bibitem[\protect\citeauthoryear{Lu \bgroup \em et al.\egroup }{2021}]{ACE}
 Yang~Young Lu, C~Yu Timothy, Giancarlo Bonora, and William~Stafford Noble.
 \newblock Ace: Explaining cluster from an adversarial perspective.
-\newblock In {\em International Conference on Machine Learning}, pages 7156--7167. PMLR, 2021.
+\newblock In {\em International Conference on Machine Learning}, pages
+  7156--7167. PMLR, 2021.
 
-\bibitem[\protect\citeauthoryear{MacQueen}{1967}]{kmeans}
-J.~MacQueen.
-\newblock Some methods for classification and analysis of multivariate observations.
-\newblock 1967.
+\bibitem[\protect\citeauthoryear{MacQueen and others}{1967}]{kmeans}
+James MacQueen et~al.
+\newblock Some methods for classification and analysis of multivariate
+  observations.
+\newblock In {\em Proceedings of the fifth Berkeley symposium on mathematical
+  statistics and probability}, volume~1, pages 281--297. Oakland, CA, USA,
+  1967.
 
-\bibitem[\protect\citeauthoryear{Pliner \bgroup \em et al.\egroup }{2019}]{threestep}
+\bibitem[\protect\citeauthoryear{Pliner \bgroup \em et al.\egroup
+  }{2019}]{threestep}
 Hannah~A Pliner, Jay Shendure, and Cole Trapnell.
 \newblock Supervised classification enables rapid annotation of cell atlases.
 \newblock {\em Nature methods}, 16(10):983--986, 2019.
 
-\bibitem[\protect\citeauthoryear{Qiu \bgroup \em et al.\egroup }{2021}]{NeuTraL}
+\bibitem[\protect\citeauthoryear{Qiu \bgroup \em et al.\egroup
+  }{2021}]{NeuTraL}
 Chen Qiu, Timo Pfrommer, Marius Kloft, Stephan Mandt, and Maja Rudolph.
-\newblock Neural transformation learning for deep anomaly detection beyond images.
-\newblock In {\em International Conference on Machine Learning}, pages 8703--8714. PMLR, 2021.
+\newblock Neural transformation learning for deep anomaly detection beyond
+  images.
+\newblock In {\em International Conference on Machine Learning}, pages
+  8703--8714. PMLR, 2021.
 
 \bibitem[\protect\citeauthoryear{Sakurada and Yairi}{2014}]{AE}
 Mayu Sakurada and Takehisa Yairi.
-\newblock Anomaly detection using autoencoders with nonlinear dimensionality reduction.
-\newblock In {\em Proceedings of the MLSDA 2014 2nd Workshop on Machine Learning for Sensory Data Analysis}, MLSDA'14, pages 4--11, New York, NY, USA, 2014. Association for Computing Machinery.
+\newblock Anomaly detection using autoencoders with nonlinear dimensionality
+  reduction.
+\newblock In {\em Proceedings of the MLSDA 2014 2nd Workshop on Machine
+  Learning for Sensory Data Analysis}, MLSDA'14, pages 4--11, New York, NY,
+  USA, 2014. Association for Computing Machinery.
 
 \bibitem[\protect\citeauthoryear{Shenkar and Wolf}{2021}]{ICL}
 Tom Shenkar and Lior Wolf.
-\newblock Anomaly detection for tabular data with internal contrastive learning.
+\newblock Anomaly detection for tabular data with internal contrastive
+  learning.
 \newblock In {\em International Conference on Learning Representations}, 2021.
 
-\bibitem[\protect\citeauthoryear{Stuart \bgroup \em et al.\egroup }{2021}]{RNAmore}
+\bibitem[\protect\citeauthoryear{Stuart \bgroup \em et al.\egroup
+  }{2021}]{RNAmore}
 Tim Stuart, Avi Srivastava, Shaista Madad, Caleb~A. Lareau, and Rahul Satija.
 \newblock Single-cell chromatin state analysis with signac.
 \newblock {\em Nature Methods}, 18(11):1333--1341, 2021.
 
-\bibitem[\protect\citeauthoryear{Traag \bgroup \em et al.\egroup }{2019}]{leiden}
+\bibitem[\protect\citeauthoryear{Traag \bgroup \em et al.\egroup
+  }{2019}]{leiden}
 Vincent~A Traag, Ludo Waltman, and Nees~Jan Van~Eck.
 \newblock From louvain to leiden: guaranteeing well-connected communities.
 \newblock {\em Scientific reports}, 9(1):5233, 2019.
 
 \bibitem[\protect\citeauthoryear{Tu \bgroup \em et al.\egroup }{2021}]{DFCN}
-Wenxuan Tu, Sihang Zhou, Xinwang Liu, Xifeng Guo, Zhiping Cai, En~Zhu, and Jieren Cheng.
+Wenxuan Tu, Sihang Zhou, Xinwang Liu, Xifeng Guo, Zhiping Cai, En~Zhu, and
+  Jieren Cheng.
 \newblock Deep fusion clustering network.
-\newblock In {\em Proceedings of the AAAI Conference on Artificial Intelligence}, volume~35, pages 9978--9987, 2021.
+\newblock In {\em Proceedings of the AAAI Conference on Artificial
+  Intelligence}, volume~35, pages 9978--9987, 2021.
 
 \bibitem[\protect\citeauthoryear{Wang and Deng}{2018}]{domainada}
 Mei Wang and Weihong Deng.
 \newblock Deep visual domain adaptation: A survey.
 \newblock {\em Neurocomputing}, 312:135--153, 2018.
 
-\bibitem[\protect\citeauthoryear{Wang \bgroup \em et al.\egroup }{2019}]{AGC}
-Chun Wang, Shirui Pan, Ruiqi Hu, Guodong Long, Jing Jiang, and Chengqi Zhang.
-\newblock Attributed graph clustering: A deep attentional embedding approach.
-\newblock {\em ArXiv}, abs/1906.06532, 2019.
-
 \bibitem[\protect\citeauthoryear{Wang \bgroup \em et al.\egroup }{2022}]{scCNC}
 Hai-Yun Wang, Jian-Ping Zhao, Chun-Hou Zheng, and Yan-Sen Su.
-\newblock {scCNC: a method based on capsule network for clustering scRNA-seq data}.
+\newblock {scCNC: a method based on capsule network for clustering scRNA-seq
+  data}.
 \newblock {\em Bioinformatics}, 38(15):3703--3709, 06 2022.
 
-\bibitem[\protect\citeauthoryear{Wolf \bgroup \em et al.\egroup }{2018}]{scanpy}
+\bibitem[\protect\citeauthoryear{Wolf \bgroup \em et al.\egroup
+  }{2018}]{scanpy}
 F~Alexander Wolf, Philipp Angerer, and Fabian~J Theis.
 \newblock Scanpy: large-scale single-cell gene expression data analysis.
 \newblock {\em Genome biology}, 19:1--5, 2018.
 
 \bibitem[\protect\citeauthoryear{Xu \bgroup \em et al.\egroup }{2023}]{SLAD}
 Hongzuo Xu, Yijie Wang, Juhui Wei, Songlei Jian, Yizhou Li, and Ning Liu.
-\newblock Fascinating supervisory signals and where to find them: Deep anomaly detection with scale learning.
-\newblock In {\em Proceedings of the 40th International Conference on Machine Learning}, ICML'23. JMLR.org, 2023.
+\newblock Fascinating supervisory signals and where to find them: Deep anomaly
+  detection with scale learning.
+\newblock In {\em Proceedings of the 40th International Conference on Machine
+  Learning}, ICML'23. JMLR.org, 2023.
 
 \bibitem[\protect\citeauthoryear{Yu \bgroup \em et al.\egroup }{2022}]{scTAG}
 Zhuohan Yu, Yifu Lu, Yunhe Wang, Fan Tang, Ka-Chun Wong, and Xiangtao Li.
-\newblock Zinb-based graph embedding autoencoder for single-cell rna-seq interpretations.
-\newblock In {\em Proceedings of the AAAI conference on artificial intelligence}, volume~36, pages 4671--4679, 2022.
+\newblock Zinb-based graph embedding autoencoder for single-cell rna-seq
+  interpretations.
+\newblock In {\em Proceedings of the AAAI conference on artificial
+  intelligence}, volume~36, pages 4671--4679, 2022.
 
-\bibitem[\protect\citeauthoryear{Zenati \bgroup \em et al.\egroup }{2018}]{EffGAN}
-Houssam Zenati, Chuan~Sheng Foo, Bruno Lecouat, Gaurav Manek, and Vijay~Ramaseshan Chandrasekhar.
+\bibitem[\protect\citeauthoryear{Zenati \bgroup \em et al.\egroup
+  }{2018}]{EffGAN}
+Houssam Zenati, Chuan~Sheng Foo, Bruno Lecouat, Gaurav Manek, and
+  Vijay~Ramaseshan Chandrasekhar.
 \newblock Efficient gan-based anomaly detection.
 \newblock {\em arXiv preprint arXiv:1802.06222}, 2018.
 
 \bibitem[\protect\citeauthoryear{Zhai \bgroup \em et al.\egroup }{2023}]{scPOT}
 Yuyao Zhai, Liang Chen, and Minghua Deng.
-\newblock Realistic cell type annotation and discovery for single-cell rna-seq data.
-\newblock In Edith Elkind, editor, {\em Proceedings of the Thirty-Second International Joint Conference on Artificial Intelligence, {IJCAI-23}}, pages 4967--4974. International Joint Conferences on Artificial Intelligence Organization, 8 2023.
+\newblock Realistic cell type annotation and discovery for single-cell rna-seq
+  data.
+\newblock In Edith Elkind, editor, {\em Proceedings of the Thirty-Second
+  International Joint Conference on Artificial Intelligence, {IJCAI-23}}, pages
+  4967--4974. International Joint Conferences on Artificial Intelligence
+  Organization, 8 2023.
 \newblock Main Track.
 
-\bibitem[\protect\citeauthoryear{Zhou \bgroup \em et al.\egroup }{2022}]{kratos}
+\bibitem[\protect\citeauthoryear{Zhou \bgroup \em et al.\egroup
+  }{2022}]{kratos}
 Zihan Zhou, Zijia Du, and Somali Chaterji.
-\newblock Kratos: Context-aware cell type classification and interpretation using joint dimensionality reduction and clustering.
-\newblock In {\em Proceedings of the 28th ACM SIGKDD Conference on Knowledge Discovery and Data Mining}, pages 2616--2625, 2022.
+\newblock Kratos: Context-aware cell type classification and interpretation
+  using joint dimensionality reduction and clustering.
+\newblock In {\em Proceedings of the 28th ACM SIGKDD Conference on Knowledge
+  Discovery and Data Mining}, pages 2616--2625, 2022.
 
 \end{thebibliography}

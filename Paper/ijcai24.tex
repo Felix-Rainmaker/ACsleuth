@@ -16,7 +16,7 @@
 \usepackage{times}
 \usepackage{soul}
 \usepackage{url}
-\usepackage[hidelinks]{hyperref}
+% \usepackage[hidelinks]{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[small]{caption}
 \usepackage{graphicx}
@@ -28,6 +28,10 @@
 \usepackage{algorithmic}
 \usepackage[switch]{lineno}
 \usepackage{multirow}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{cleveref}
+\usepackage{enumerate}
 
 % Comment out this line in the camera-ready submission
 \nolinenumbers
@@ -41,8 +45,10 @@
 % for a nice explanation of how to define new theorems, but keep
 % in mind that the amsthm package is already included in this
 % template and that you must *not* alter the styling.
-\newtheorem{example}{Example}
-\newtheorem{theorem}{Theorem}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{assumption}{Assumption}[section]
 
 % Following comment is from ijcai97-submit.tex:
 % The preparation of these files was supported by Schlumberger Palo Alto
@@ -114,14 +120,14 @@ fourth@example.com
     conditions and pathological analyses. Since the single-cell RNA sequencing (scRNA-seq) 
     data analysis has been greatly prompted by the development of deep learning, we can 
     effectively detect anomalous cells and explore their detail types. However, most of 
-    works simply focus on detecting anomalies within normal observations, overlooking the 
+    works simply focus on detecting anomalies within normal samples, overlooking the 
     opportunity for more detailed distinctions of them. Moreover, the essence of both 
     anomaly and fine-grained detection is to learn distinct representations for different 
     sample categories, suggesting a straightforward pipeline of sequentially detecting 
     anomalies then subtyping them. Thus, we introduce an innovative workflow called ACsleuth, 
     aiming at fine-grained Anomalous cell detection for single-cell multiomics, which 
     further contains a batch correction module to alleviate bias inherent in the raw 
-    data. By employing a GAN model to reconstruct normal observations and leveraging the 
+    data. By employing a GAN model to reconstruct normal samples and leveraging the 
     reconstruction error as the assessment criterion for the anomaly detector, we then 
     utilize the DESC clustering method for scRNA-seq data to explore subtypes of anomalies. 
     Extensive experiments improve the superiority of ACsleuth both of the comparison with the 
@@ -168,11 +174,11 @@ recognize such shared characteristics between these two biases and tended to add
 independently, which are neither elegant nor efficient.
 
 Besides, most of anomaly detection studies work solely on identifying anomalies within normal 
-observations, which often treating it as a class-imbalance binary classification task \cite{OA}. 
+samples, which often treating it as a class-imbalance binary classification task \cite{OA}. 
 However, these studies overlook the opportunity for more detailed classification of 
 anomalies, such as distinguishing between different types of tumors or various criminal 
 behaviors. This limitation results in underutilization of the available data and hinders 
-the ability to learn more granular representations of the anomalous observations. 
+the ability to learn more granular representations of the anomalous samples. 
 Furthermore, the core objective of both anomaly detection and fine-grained detection is to 
 acquire a more nuanced representation for each type of samples. This shared optimalization 
 goal suggests that these two tasks can seamlessly integrate into an entire pipeline. 
@@ -187,12 +193,12 @@ cells. Our contributions are summarized as follows:
 
 \item Methodologically, we introduce an innovative workflow called ACsleuth, which contains 
 fine-grained anomalous cell detection. The anomaly detector is first trained 
-unsupervisedly on the reference dataset which has only normal observations, then we learn 
+unsupervisedly on the reference dataset which has only normal samples, then we learn 
 the batch effects on the normal samples identified by the former detector and use it for 
 the batch correction on anomaly sets sequentially, finally subtyping anomalies simply by a recent 
 single-cell clustering method.
 \item Innovatively, we achieve domain adaptation by tackling batch effects in the target dataset 
-after removing anomalous observations and using datasets derived from different sequencing technologies 
+after removing anomalous samples and using datasets derived from different sequencing technologies 
 as the reference and the target data. For the former, ACsleuth involves leveraging a wasserstein 
 distance as the domain transfer loss in MMD, to learn the domain bias with solely normal cells 
 then subsequently applying bias correction on the detected anomalies before fine-grained subtyping them. 
@@ -204,27 +210,29 @@ for cross-domain anomaly detection task within different numbers of highly varia
 ACsleuth consistently raised state-of-the-art in the majority of anomaly detection and 
 fine-grained detection.
 \end{itemize}
+
+
 \section{Related Works}
 \subsection{Anomaly Detection}
 Anomaly detection usually relies on learning distinct representations between normal 
-observations and anomalies. Many studies focus on representing normal observations and 
+samples and anomalies. Many studies focus on representing normal samples and 
 anomalies are detected by filtering representations that are dissimilar to normal ones. 
 One straightforward manner is one-class classification, which aims to train a model that 
 can accurately describe normal samples and then distinguish whether test samples are from 
 the same distribution as the reference data. This kind of detectors is trained to learn a 
-new representation \cite{RCA} \cite {liznerski} that 
+new representation \cite{RCA,liznerski} that 
 enhances the dissimilarity between embeddings of normal and anomalous samples, thereby 
 improving the detectability of anomalies. While the one-class assumption is vulnerable 
 since real datasets often contain multiple inliers \cite{SLAD}.
 
 Generative models are another standard procedure in detecting outliers. They learn by 
-reconstructing normal observations, which leads to poor reconstruction of anomalies in 
+reconstructing normal samples, which leads to poor reconstruction of anomalies in 
 the target data due to their distinct reconstruction error. This is attributed to the 
 fact that the reference data for the anomaly detection task exclusively consists of 
-normal observations.
+normal samples.
 Popular frameworks such as autoencoder (AE) \cite{odae}, generative adversarial 
 networks \cite{GANad} are widely used. Nevertheless, such GAN-based 
-models like \cite{EffGAN} still struggle with distinguishing multiple normal observations, and are prone to 
+models like \cite{EffGAN} still struggle with distinguishing multiple normal samples, and are prone to 
 occurring model-collapse during training. Additionally, AE frameworks exhibit limitations 
 handling the noisy or high-dimensional sparse data.
 \subsection{Single Cell RNA-Seq Data Subtyping}
@@ -245,10 +253,10 @@ detection, SCEVAN \cite{SCEVAN} and CopyKAT \cite{CopyKAT} are designed
 specifically for tumors since they used the prior information, CAMLU \cite{CAMLU} 
 exhibits a higher degree of generality via the employment of AE, albeit its performance is suboptimal. 
 
-Detecting subtypes solely involves assigning labels to distinct types of observations, 
+Detecting subtypes solely involves assigning labels to distinct types of samples, 
 while cell annotation demands the utilization of prior information to assign specific 
 labels to the cells. However, compared to cell annotation, subtype detection necessitates 
-the acquisition of more robust representations. Given that the observations from different 
+the acquisition of more robust representations. Given that the samples from different 
 subtypes fall under the same subcategory, the inherent differences between them tend to 
 be subtler. Therefore, fine-grained subtype detection relies heavily on distinctive representations to 
 achieve accurate classification. In summary, both anomaly detection and fine-grained detection 
@@ -260,8 +268,10 @@ anomalies detailed multi-classification.
 \begin{figure}
     \centering
     \includegraphics[scale=0.20]{Framework.jpg}
-    \caption{Illustration of ACSleuth. The overall model consists of GAN-based anomaly detection and batch effect correction modules and DESC clustering module for fine-grained anomalous cell detection.}
-\end{figure} 
+    \caption{Illustration of ACsleuth. The overall model consists of GAN-based anomaly detection and batch effect correction modules and DESC clustering module for fine-grained anomalous cell detection.}
+\end{figure}
+
+
 \section{Methods}
 We first give an overview of subtyping cells workflow, which can be divided into two main 
 parts: anomaly detection and subtype clustering. We start with training the detector 
@@ -270,85 +280,152 @@ contains two kinds of labels: the two-class one for distinguishing between norma
 anomalous cells, and the detailed one for categorizing subtypes of cells. Specifically, 
 we exclusively leverage the subtyping module for anomalies discovered by the detector, 
 which we refer to as “pre-anomalies”. That means they may include a few “fake anomalies”. 
-Finally, we use true anomalies and their detailed labels to evaluate the effects of 
-subtyping, since we solely focus on anomalies’ subtypes instead of considering normal 
-cells. Then we combine it with the former detector to fully assess the whole pipeline. 
 ACsleuth consists of three modules, each dedicated to anomaly detection, batch effect correction and subtyping.
-\subsection{Detecting Anonaly Cells}
+\subsection{Detecting Anomaly Cells}
 ACsleuth detects anomalies based on learning the reconstruction of normal 
-observations from the reference dataset through the generative adversarial networks (GAN). 
-As the GAN model is specifically trained to reconstruct solely normal observations, 
+samples in the reference datasets through the generative adversarial networks (GAN). 
+As the GAN model is specifically trained to reconstruct normal samples, 
 anomalous cells in target datasets are more likely to hold larger reconstruction errors, 
-which are treated as an assessment criterion for the detector.
-Our GAN module (referred as \textit{module I}) simply consists of a generator and a discriminator. 
-The generator can be subdivided into three distinct components: an encoder, a decoder and 
-a memory block. Instead of random weights initialization, we choose to pretrain the encoder 
-and the decoder on auxiliary datasets for the pre-text task focused on data reconstruction, 
-which alleviates the model degeneration. Let $x_i$ denote the gene expression vectors of the cell 
-$i$ in scRNA-seq, the architectural backbone of the encoder is a MLP network. Thus, we have 
-the embeddings of the cell $i$ from:
-\begin{equation}
-    z_i = f_{\textit{MLP}}(x_i)
-\end{equation}
-The memory block is fundamentally an embedding queue $Q\in\mathbb{R}^{N_{mem}\times p}$ 
-filled with $z_i\in\mathbb{R}^p$, as $N_{mem}$ is defined as the number of in-memory 
-embeddings. It is initialized with embeddings generated by the pretrained encoder and 
-provides an attention-based 
-means for reconstructing the embedding as $\widetilde{z} \in \mathbb{R}^p$: 
-\begin{equation}
-    \widetilde{z}_i = Q^T \mathbf{softmax}\left(\frac{Qz_i}{\tau}\right)
-\end{equation}
-where $\tau$ is the temperature hyperparameter. During the entire training procedure,  
-$Q$ is dynamically updated by enqueuing the most recently 
-reconstructed $\widetilde{z}$ and dequeuing the oldest ones, thereby striking 
-a balance between preserving learnt features and adapting to new observations, and also 
-effectively mitigating the risks of mode collapse. The decoder then reconstructs $x_i$ from 
-the transcriptomic embeddings $\widetilde{z_\mathbf{i}}$. Decoders for 
-generating $\widehat{x_i}$ are also implemented using MLP-based, since the simpler 
-architectures improve both model efficiency and flexibility without compromising the 
-overall performance \cite{AGC}. Besides, $\widehat{x_i}$ passes the same encoders 
-to generate $\widehat{z_i}$ for calculating comparative loss between the original and re-encoded embeddings.
+which are treated as an assessment criterion. 
 
-The discriminator $D$ is trained to distinguish whether x and $\hat{x}$ is real or 
-generated data. Therefore, loss functions of the generator and the discriminator for 
-anomaly detection is defined as:
+\textbf{Model Training.} Our GAN module (referred as \textit{module I}) consists of a generator and a discriminator. 
+The generator can be subdivided into three distinct components: an encoder, a decoder and a memory block.
+To define the gene expression pattern, we employ the mathematical model similar to \cite{hornung2016combining}.
+Let $S^k$ denote the group of cells in the same batch $k$.
+Then, we propose an assumption as follows.
+\begin{assumption}\label{as:pattern}
+    The gene expression vector $\bm{x}_i \in S^k \cap \mathbb{R}^{N_{gene}}$ of cell $i$ can be represented as:
+    \begin{equation}\label{eq:pattern}
+        \bm{x}_i = \bm{x}_i^* + \bm{b}_i^k + \bm{\epsilon}_i
+    \end{equation}
+    where $\bm{x}_i^*$ denotes the biological factor, $\bm{b}_i^k$ denotes batch-specific factor.
+    $\bm{x}_i^* \sim P_{\bm{x}^*}$, $\bm{b}_i^k \sim P_{\bm{b}^k}$, and random noise $\bm{\epsilon}_i\sim N(0, \bm{\sigma}_i^2)$.
+\end{assumption}
+Thus, we have the embeddings of the cell $i$ with ACsleuth's encoder (MLP backbone, $G_E:\mathbb{R}^{N_{gene}} \rightarrow \mathbb{R}^p$) as:
+\begin{equation}
+    \bm{z}_i = G_E(\bm{x}_i)
+\end{equation}
+The memory block is fundamentally an embedding queue $\bm{Q}\in\mathbb{R}^{N_{mem}\times p}$ 
+filled with $\bm{z}$, where $N_{mem}$ is the number of in-memory embeddings.
+It provides an attention-based means for reconstructing the embedding as $\widetilde{\bm{z}}_i \in \mathbb{R}^p$: 
+\begin{equation}
+    \widetilde{\bm{z}}_i = \bm{Q}^T \text{softmax}\left(\frac{\bm{Q}\bm{z}_i}{\tau}\right)
+\end{equation}
+where $\tau$ is the temperature hyperparameter.
+During the entire training procedure, $\bm{Q}$ is dynamically updated by enqueuing the most recently 
+reconstructed $\widetilde{\bm{z}}$ and dequeuing the oldest ones, thereby striking 
+a balance between preserving learnt features and adapting to new samples also 
+effectively mitigating the risks of mode collapse. 
+Subsequently, the decoder (MLP backbone, $G_D:\mathbb{R}^p \rightarrow \mathbb{R}^{N_{gene}}$) reconstructs the gene expression vectors 
+with $\widetilde{\bm{z}}_i$ as
+\begin{equation}
+    \widehat{\bm{x}}_i = G_D(\widetilde{\bm{z}}_i)
+\end{equation}
+
+The discriminator $D: \mathbb{R}^{N_{gene}} \rightarrow \mathbb{R}^k$ is trained to distinguish whether $\bm{x}$ and $\widehat{\bm{x}}$ is real or generated.
+Therefore, loss functions of the generator and the discriminator for anomaly detection is defined as:
 \begin{equation}
 \begin{split}
-    \mathcal{L}_{\text{Gen}_1} &= \alpha\mathcal{L}_{\text{rec}} + \beta\mathcal{L}_{\text{comp}} + \gamma\mathcal{L}_{\text{adv}} \\
-    &= \alpha\mathbb{E}{||x - \widehat{x}||}_1 + \beta\mathbb{E}{||z - \widehat{z}||}_2 - \gamma\mathbb{E}[D(\widehat{x})] \\
+    \mathcal{L}_{G_1} &= \alpha\mathcal{L}_{\text{rec}} + \beta\mathcal{L}_{\text{adv}} \\
+    &= \alpha\mathbb{E}\left[\Vert \bm{x} - \widehat{\bm{x}}\Vert_1\right] - \beta\mathbb{E}\left[D(\widehat{\bm{x}})\right] \\
 \end{split}
 \end{equation}
 \begin{equation}
-    \mathcal{L}_{D_1} = \mathbb{E}\left[D\left(\widehat{x}\right)\right] - \mathbb{E}\left[D\left(x\right)\right] + \lambda\mathbb{E}[{({||\nabla D (\widetilde{x})^2||}_2 - 1)}^2]  
+    \mathcal{L}_{D_1} = \mathbb{E}\left[D(\widehat{\bm{x}})\right] - \mathbb{E}\left[D(\bm{x})\right] + \lambda\mathbb{E}\left[\left({\Vert \nabla_{\widetilde{\bm{x}}} D(\widetilde{\bm{x}}) \Vert}_2 - 1\right)^2\right]  
 \end{equation}
-where $\ \widetilde{x}=\epsilon\widehat{x}_i+\left(1-\epsilon\right){x},\ \epsilon\in\left(0,1\right)$. 
-$\mathcal{L}_{rec}$ 
-is defined as the data reconstruction loss, $\mathcal{L}_{comp}$ denotes the comparative 
-loss between the original and the re-encoded embeddings. $\mathcal{L}_{adv}$ denotes the 
-adversarial loss. $\alpha, \beta, \gamma\geq0$ represent the weights of three loss functions. 
-$D\left(\widehat{x}_i\right)$ represents the probability of classifying  $\widehat{x}_i$ as 
-the real observation. Significantly, the discriminator’s loss function contains of a 
-gradient penalty factor, which promotes the stability of the adversarial training and 
-reduces the risk of mode collapse \cite{wGANs}.
-Once the training is completed, ACsleuth is leveraged to reconstruct observations from target 
-scRNA-seq or scATAC-seq datasets. We define the anomalous score as the cosine 
-dissimilarity between embeddings of the original and the reconstructed observations to 
-assess the reconstruction accuracy of an observation $i$:
-\begin{equation}
-    d_i = 1-\frac{{z_i}^T\widehat{z}_i}{||{z_i}^T||\cdot||\widehat{z}_i||}
-\end{equation}
-A higher $d_i$ refers to a lower reconstruction accuracy, which means the 
-observation $i$ is more likely to be anomalous. Lastly, we give a predefined threshold to 
-detect outliers based on those anomalous scores that exceed the specified limit.
+where $\widetilde{\bm{x}}=\epsilon\widehat{\bm{x}}_i+(1-\epsilon){\bm{x}},\ \epsilon\in(0,1)$. 
+$\mathcal{L}_{\text{rec}}$ is defined as the data reconstruction loss.
+$\mathcal{L}_{\text{adv}}$ denotes the adversarial loss. $\alpha, \beta, \lambda\geq0$ represent the weights of three loss functions. 
+Significantly, the discriminator's loss function contains of a gradient penalty factor,
+which promotes the stability of the adversarial training and reduces the risk of mode collapse \cite{wGANs}.
 
-\textbf{Cross-domain Anomaly Detection.}	Based on transfer learning, we train the 
-detector to reconstruct normal observations within the reference scRNA-seq dataset 
-and simply apply it on the target scATAC-seq dataset. While the former focuses on gene 
-expression, the latter reveals cell’s chromatin accessibility, both data domains capture 
-single-cell information, which can be regarded as different views of the same single cell. 
-As they have the identical data structures, this cross-domain task shows ACsleuth is capable 
-of learning a robust representation of the entire cell thereby exhibiting strong 
+\textbf{Anomaly Inference.} Let $\bm{\delta}_m^x \coloneqq \bm{x}_m - \widehat{\bm{x}}_m$, $\bm{\delta}_n^y \coloneqq \bm{y}_n - \widehat{\bm{y}}_n$
+denote the reconstruction errors of normal and anomaly samples.
+Motivated by the main idea that the reconstruction errors of anomaly cells are significantly larger than normal cells,
+we hope to maximize the discrepancy of $\bm{\delta}_m^x$ and $\bm{\delta}_n^y$.
+Here, we describe our objective with MMD (Maximum Mean Discrepancy), a non-parametric metric to quantify the difference between two probability distributions in a reproducing kernel Hilbert space (RKHS) \cite{kolouri2016sliced,gretton2012kernel}.
+And the squared MMD between two sets of samples $\bm{x}_m \sim p$ and $\bm{y}_n \sim q$ can be derived as \cite{gretton2012kernel}:
+\begin{equation}\label{eq:MMD}
+    \begin{aligned}
+        MMD^2\left(\bm{x}_m, \bm{y}_n\right) = & \Vert \frac{1}{m}\sum_{i=1}^{m}\phi(\bm{x}_i) -  \frac{1}{n}\sum_{j=1}^{n}\phi(\bm{y}_j)\Vert_{\mathcal{H}}^2 \\
+        =  &\mathbb{E}_{\bm{x}, \bm{x}^{\prime} \sim p}\left[k(\bm{x}, \bm{x}^{\prime})\right] +
+        \mathbb{E}_{\bm{y}, \bm{y}^{\prime} \sim q}\left[k(\bm{y}, \bm{y}^{\prime})\right] \\
+        & - 2\mathbb{E}_{\bm{x} \sim p, \bm{y} \sim q}\left[k(\bm{x}, \bm{y})\right]
+    \end{aligned}
+\end{equation}
+where $k$ is a postive definite kernel.
+Therefore, the objective for detecting anomalous and normal cells can be expressed as follows:
+\begin{equation}\label{eq:def}
+        \min_{\bm{\delta}_m^x, \bm{\delta}_n^y} \quad \mathcal{L}_p =  -MMD^2\left(\bm{\delta}_m^x, \bm{\delta}_n^y\right)
+\end{equation}
+In fact, it indicates we need to optimize a mapping function $f_s: \mathbb{R}^p \rightarrow \{0, 1\}$ that partitions unlabeled total samples $\bm{\delta}_{m+n}$ into $\bm{\delta}_m^x$ and $\bm{\delta}_n^y$, aiming to minimize $\mathcal{L}_p$.
+Therefore, we propose \Cref{th:opt_s} for transforming \eqref{eq:def}, and the proof is provided in \Cref{proof:opt_s}.
+\begin{theorem}\label{th:opt_s}
+Define $s_i \coloneqq f_s(\bm{\delta}_i)$. The optimization \eqref{eq:def} have an equivalent form:
+\begin{equation}\label{eq:def_s}
+    \min_{f_s} \quad \mathcal{L}_p = -\sum_{i}^{m+n}\sum_{j\neq i}^{m+n} k(\bm{\delta}_i, \bm{\delta}_j) \gamma(s_i, s_j)
+\end{equation}
+where
+\begin{equation}\label{eq:gamma}
+    \gamma(s_i, s_j) = 
+    \begin{cases}
+        \frac{1}{m(m-1)}, & s_i = s_j = 0 \\
+        \frac{1}{n(n-1)}, & s_i = s_j = 1 \\
+        \frac{-1}{mn}, & s_i \neq s_j
+    \end{cases}
+\end{equation}
+If $s_i = 1$, sample $i$ will be classified as anomaly; otherwise, it will be classified as normal. 
+\end{theorem}
+
+For detecting anomalies, We aim to learn a predictor $f_p:\mathbb{R}^p \rightarrow [0, 1]$ to provide anomaly scores $p_i \coloneqq f_p(\bm{\delta}_i)$.
+However, $\gamma(s_i, s_j): \{0, 1\} \times \{0, 1\} \rightarrow \mathbb{R}$ is discrete and doesn't exist gradients.
+A natural idea is to extend $\gamma$ to the continuous scenario, resulting in the function $\gamma_c(p_i, p_j): (0, 1) \times (0, 1) \rightarrow \mathbb{R}$.
+Here, we propose a potential $\gamma_c$ based on \Cref{th:gamma_c}, and the analytic properties of $\gamma_c$ everywhere indicate its strong smoothness, making it amenable to gradient descent optimization.
+The proof of \Cref{th:gamma_c} is available at \Cref{proof:gamma_c}.
+\begin{theorem}\label{th:gamma_c}
+    For any given $m, n$, there always exists $\gamma_c$ that extends $\gamma$ to the continuous scenario and satisfies:
+    \begin{enumerate}[(1)]
+        \item $\forall s_i, s_j \in \{0, 1\}$, $\gamma_c(s_i, s_j)=\gamma(s_i, s_j)$
+        \item $\gamma_c$ is analytic everywhere within its domain.
+    \end{enumerate}
+    A potential $\gamma_c$ can be defined as follows:
+    \begin{equation}\label{eq:gamma_c}
+        \begin{aligned}
+            \gamma_c(p_i, p_j) \coloneqq & \frac{\sin\pi p_i \sin\pi p_j}{\pi^2}\left(\frac{[m(m-1)]^{-1}}{p_ip_j} - \frac{(mn)^{-1}}{(p_i-1)p_j} \right.\\
+            & \left.- \frac{(mn)^{-1}}{p_i(p_j-1)} + \frac{[n(n-1)]^{-1}}{(p_i-1)(p_j-1)}\right)
+        \end{aligned}
+    \end{equation}
+\end{theorem}
+Subsequently, the predictor can be optimized with the following loss function:
+\begin{equation}\label{eq:loss_p}
+    \mathcal{L}_p = -\sum_{i}\sum_{j\neq i} k(\bm{\delta}_i, \bm{\delta}_j) \gamma_c(p_i, p_j)
+\end{equation}
+Ultimately, by minimizing \eqref{eq:loss_p} through updating predictor with gradient descent, we can achieve our objective \eqref{eq:def} and obtain anomaly scores.
+
+\textbf{Cross-domain Anomaly Detection.} 
+Compared with other methods, ACsleuth not only measures the difference between anomalous and normal samples in a more effective manner,
+enhancing the accuracy of anomaly detection, but also introduces transferability into this process.
+Specifically, in the context of large sample sizes, even in the presence of batch effects or domain biases between the target and reference datasets,
+we can still ensure that the accuracy of prediction remains unaffected. 
+From a mathematical perspective, ACsleuth satisfies \Cref{th:trans}, which indicates the cross-domain transfer error can be bounded by sample size $n$.
+In practice, when we minimize the objective \eqref{eq:def}, that is, when maximizing this batch-effect-independent $MMD^2\left(P_{\delta^{y*}}, P_{\delta^{x*}}\right)$.
+Therefore, \Cref{th:trans} can indicate inherent transferability to realize cross-domain detection.
+The proof of \Cref{th:trans} is provided in \Cref{proof:trans}.
+\begin{theorem}\label{th:trans}
+We assume the proportion of normal samples $\bm{x}_m$ to anomaly samples $\bm{y}_n$ satisfies $m/n = C \geq 1$, where $C$ is a constant but not large enough.
+If \Cref{as:pattern} is valid and MMD is induced by linear kernels, for any samples $\bm{x}_m, \bm{y}_n$
+there exist the biological information reconstruction errors $\bm{\delta}_n^{y*}, \bm{\delta}_m^{x*}$ that are independent of batch effects, such that their distributions $P_{\bm{\delta}^{y*}}, P_{\bm{\delta}^{x*}}$ satisfy:
+\begin{multline}
+    \mathbb{P}\left(\big| MMD^2(\bm{\delta}_m^x, \bm{\delta}_n^y) - MMD^2(P_{\bm{\delta}^{x*}}, P_{\bm{\delta}^{y*}}) \big| \geq \varepsilon \right) \leq \\
+    \alpha \exp\left(-\frac{\beta C}{1+C}n\varepsilon^2\right)
+\end{multline}
+where $\varepsilon$ denotes transfer error, $\alpha, \beta$ are constants.
+\end{theorem}
+Based on \Cref{th:trans}, we can reconstruct normal samples in the reference scRNA-seq dataset 
+and simply apply it on the target scATAC-seq dataset. 
+This cross-domain task shows ACsleuth is capable of learning a robust representation of the entire cell thereby exhibiting strong 
 generalization performance.
+
 \subsection{Multi Sample Batch Effect Correction}
 The identification and removal of confounding anomalies from target datasets empower 
 ACsleuth to align multiple target datasets onto the feature space of the reference dataset, 
@@ -370,16 +447,16 @@ is the batch effects of the batch $i$ and the term $\epsilon_{ij}~N(0,1)$ repres
 which is uneffected by batch effects.
 
 For the first subtask, we introduce a GAN module (referred as \textit{module II}) that takes 
-as input the embeddings of normal observations from both the reference and target datasets, 
+as input the embeddings of normal samples from both the reference and target datasets, 
 which are generated by the encoder within \textit{module I}. The generator of this module is 
-trained to learn a non-negative mapping matrix for generating observations in target 
+trained to learn a non-negative mapping matrix for generating samples in target 
 datasets through those in the reference dataset, while the discriminator corresponding to 
-learning to distinguish the authentic and generated observations. In detail, let $N_T$ 
-and $N_R$ denote the number of observations in the target and reference dataset, then 
+learning to distinguish the authentic and generated samples. In detail, let $N_T$ 
+and $N_R$ denote the number of samples in the target and reference dataset, then 
 define $Z_T\in\mathbb{R}^{N_T\times p}$ as the embeddings of multi-sample target datasets, 
 $Z_R\in\mathbb{R}^{N_R\times p}$ the embeddings of the reference dataset, 
 $M\in\mathbb{R}^{N_T\times N_R}$ the trainable non-negative mapping matrix. The generated 
-observation represents as: 
+sample represents as: 
 \begin{equation}
     {\widehat{Z}}_T=ReLU(M)Z_R 
 \end{equation}
@@ -396,24 +473,24 @@ where  $\widetilde{Z}=\epsilon\widehat{Z}+\left(1-\epsilon\right)Z,\
 \epsilon\in\left(0,1\right)$.$\alpha,\beta,\lambda\geq0$ represent the weights of the loss 
 terms. Upon the completion of the adversarial training of \textit{module II}, the column index of 
 the maximum value on the $i^{th}$ row of matrix M corresponds to the index of the reference 
-observation that forms a “kin” pair with the $i^{th}$ observation in the target dataset. 
-We propose a hypothesis that observations belonging to the same “kin” pair share analogous 
-biological content, allowing us to approximate the reference observation by eliminating 
-the “style-divergence” from the target observation. Therefore, for the second subtask, a 
+sample that forms a “kin” pair with the $i^{th}$ sample in the target dataset. 
+We propose a hypothesis that samples belonging to the same “kin” pair share analogous 
+biological content, allowing us to approximate the reference sample by eliminating 
+the “style-divergence” from the target sample. Therefore, for the second subtask, a 
 GAN for “style-transfer” (referred as \textit{module III}) is employed to learn the 
 “style-divergences”, or namely batch effects, between pairs of the target and reference 
 datasets as rows of a trainable matrix $S\in\mathbb{R}^{N_{batch}\times p}$ in the latent 
-embedding space. In detail, for an observation i in the target datasets, the encoder of 
+embedding space. In detail, for an sample i in the target datasets, the encoder of 
 the generator within \textit{module III} maps its raw gene expression vector 
 $x_i$ to $z_i\in\mathbb{R}^p$ in the latent embedding space. This latent representation is 
-then employed to estimate the embeddings of its “kin” observation $j$ as follows:
+then employed to estimate the embeddings of its “kin” sample $j$ as follows:
 \begin{equation}
 z_i=f_{\textit{MLP}}(x_i,W_5), {\widehat{z}}_j = z_i-S^T b_i
 \end{equation}
-where $b_i\in\mathbb{R}^{N_{batch}}$ denotes {i}’s one-hot encoded batch-identity vector for 
+where $b_i\in\mathbb{R}^{N_{batch}}$ denotes {i}'s one-hot encoded batch-identity vector for 
 selecting the corresponding “style-divergence” row from $S$. In sequence, the decoder of the 
-generator maps ${\hat{z}}_j$ back to the original reference data space as ${\hat{x}}_j$. The 
-discriminator of \textit{module III} is simply trained to distinguish the $x_j$ and ${\hat{x}}_j$. We 
+generator maps ${\widehat{z}}_j$ back to the original reference data space as ${\widehat{x}}_j$. The 
+discriminator of \textit{module III} is simply trained to distinguish the $x_j$ and ${\widehat{x}}_j$. We 
 indicate the loss functions for the generator and the discriminator of \textit{module III} as:
 \begin{equation}
 \mathcal{L}_{Gen_3}=\alpha\mathbb{E}{||x_R- \widehat{x}_R||}_1-\beta\mathbb{E}[D(\widehat{x}_R)]
@@ -422,7 +499,7 @@ indicate the loss functions for the generator and the discriminator of \textit{m
 \mathcal{L}_{D_3}=\mathbb{E}\left[D\left(\widehat{x}_R\right)\right]-\mathbb{E}\left[D\left(x_R\right)\right]+\lambda\mathbb{E}[{({||\nabla D(\widetilde{x}_R)||}_2-1)}^2]
 \end{equation}
 where $\alpha,\beta,\lambda$ and $\widetilde{x}_R$ have the same definitions as 
-their counterparts in \textit{module II}. Finally, observations in multiple target datasets can be 
+their counterparts in \textit{module II}. Finally, samples in multiple target datasets can be 
 batch-corrected and aligned in the common reference data space by passing through the 
 trained generator within \textit{module III}.
 \subsection{Fine-grained Anomalous Cell Detection}
@@ -441,7 +518,7 @@ trained generator within \textit{module III}.
         \hline
     \end{tabular}
     \caption{Information of Datasets.}
-    \label{tab:plain}
+    \label{tab:tab1}
 \end{table}
 
 
@@ -533,7 +610,7 @@ labels is assumed to beknown or automatically inferred during the clustering. In
     \end{tabular}
     }
     \caption{Average F1 score with standard deviation for anomaly detection on single-cell transcriptomics datasets.}
-    \label{tab:plain}
+    \label{tab:tab2}
 \end{table*}
 
 \begin{table*}
@@ -553,7 +630,7 @@ labels is assumed to beknown or automatically inferred during the clustering. In
     \end{tabular}
     }
     \caption{Average F1*NMI score with standard deviation for fine-grained anomaly detection on single-cell transcriptomics datasets.}
-    \label{tab:plain}
+    \label{tab:tab3}
 \end{table*}
 \subsection{Experimental Settings}
 \textbf{Dataset.}	Our experiments contain anomaly cells’ detection and anomaly cell 
@@ -615,7 +692,7 @@ ACsleuth consistently achieves stable and superior performance, as reflected by 
 of F1 scores for detecting anomalies and NMI scores for clustering on most of cases. In 
 the multi-batch task, ACsleuth significantly outperforms baseline methods. Results fully 
 demonstrate that batch effects are intractable for recent methods. ACsleuth addresses this 
-challenge by learning such kind of biases from the normal observations split from anomaly 
+challenge by learning such kind of biases from the normal samples split from anomaly 
 detection, then subsequently correcting them on the detected anomalies before subtyping 
 them. We empirically establish the necessity of the batch correction module for the scRNA-seq data analysis.
 
@@ -623,7 +700,7 @@ them. We empirically establish the necessity of the batch correction module for 
 \subsection{Ablation Studies}
 In this section, we conduct a series of ablation studies to validate how different 
 configurations of each module impact the anomaly subtyping task. We still assess ACsleuth with 
-the Cancer dataset since it contains more genes (features) and cells (observations). We 
+the Cancer dataset since it contains more genes (features) and cells (samples). We 
 present experiments sequentially for anomaly detection, batch effect correction and anomaly 
 subtyping as outlined below.
 
@@ -635,7 +712,7 @@ module easily collapses, significantly impairing affect the subsequent subtyping
 
 \textbf{Essence of the batch correction module.}	We have discussed that batch effect correction 
 is imperative for the scRNA-seq data analysis. It is straightforward to question whether 
-the subtyping results will be worse if we directly subtype anomalies observations after 
+the subtyping results will be worse if we directly subtype anomalies samples after 
 detecting them, following the same settings as baseline methods. As shown in figure 2, 
 the direct connection of two tasks is considerably adverse compared with the original ACsleuth.
 
@@ -651,7 +728,7 @@ In this paper, we innovatively propose ACsleuth, a comprehensive workflow that s
 integrates anomaly detection with fine-grained anomaly detection, which further contains a batch 
 correction module to alleviate bias inherent in the raw data. More precisely, we first 
 employ a GAN-based model to detect anomalies according to the reconstruction error, then 
-capture batch effects from filtered normal observations and correct them on the detected 
+capture batch effects from filtered normal samples and correct them on the detected 
 anomalies. We also prove that the domain adaptation module is effective for cross-domain tasks. 
 Finally, we utilize the DESC clustering algorithm to fine-grained detecting anomalous cells. 
 ACsleuth outperforms state-of-the-art approaches in anomaly detection methods for tabular 
@@ -667,6 +744,251 @@ detection workflow for tabular data generalized to another fields.
 %% The file named.bst is a bibliography style file for BibTeX 0.99c
 \bibliographystyle{named}
 \bibliography{ijcai24}
+
+\appendix
+
+\section{Proofs}
+
+\subsection{Proof of \Cref{th:opt_s}}\label{proof:opt_s}
+\begin{proof}
+\cite{gretton2012kernel} provides an unbiased empirical MMD for samples:
+\begin{equation}\label{eq:MMD_XY}
+    \begin{aligned}
+        & MMD^2\left(\bm{\delta}_m^x, \bm{\delta}_n^y\right) = \frac{1}{m(m-1)}\sum_{i}^{m}\sum_{j\neq i}^{m}k(\bm{\delta}_i^x, \bm{\delta}_j^x) \\
+        & + \frac{1}{n(n-1)}\sum_{i}^{n}\sum_{j\neq i}^{n}k(\bm{\delta}_i^y, \bm{\delta}_j^y) - \frac{2}{mn}\sum_{i}^{m}\sum_{j}^{n}k(\bm{\delta}_i^x, \bm{\delta}_j^y) \\
+        & = \sum_{i}^{m+n}\sum_{j\neq i}^{m+n}k(\bm{\delta}_i, \bm{\delta}_j)\gamma(s_i, s_j)
+    \end{aligned}
+\end{equation}
+where $\bm{\delta}_i$ denotes unlabeled total samples, and the adjustment coefficients $\gamma$ are defined as:
+\begin{equation}
+    \gamma(s_i, s_j) =
+    \begin{cases}
+        \frac{1}{m(m-1)}, & s_i = s_j = 0 \\
+        \frac{1}{n(n-1)}, & s_i = s_j = 1 \\
+        \frac{-1}{mn}, & s_i \neq s_j
+    \end{cases}
+\end{equation}
+If $s_i = 1$, sample $i$ will be classified as anomaly; otherwise, it will be classified as normal.
+By the way, \Cref{proof:opt_s} has been proved.
+\end{proof}
+
+
+\subsection{Proof of \Cref{th:gamma_c}}\label{proof:gamma_c}
+\begin{proof}
+According to \eqref{eq:gamma}, we define the two-dimensional sequence $\{\gamma_{mn}\}$ as:
+\begin{equation}
+    \begin{gathered}
+        \gamma_{00} = \frac{1}{m(m-1)}, \quad \gamma_{01} = \gamma_{10} = \frac{-1}{mn} \gamma_{11} = \frac{1}{n(n-1)} \\
+        \forall i, j \geq 2, \quad \gamma_{ij} = 0
+    \end{gathered}
+\end{equation}
+The ordinary generating function $H(x, y)$ for $\{\gamma_{mn}\}$ is:
+\begin{equation}
+    H(x, y) = \sum_{i=0}^{\infty}\sum_{j=0}^{\infty}\gamma_{ij}x^iy^j
+\end{equation}
+where $(x, y) \in \mathbb{D} \coloneqq [0, 1]\times [0, 1]$.
+
+According to \cite{bradshaw2023operational,amdeberhan2012ramanujan}, the extension of Ramanujan's master theorem in the $k$-dimensional case have been proposed as \Cref{le:MultiRam}.
+\begin{lemma}\label{le:MultiRam}
+    If a complex-valued function $f(x_1, \cdots, x_k)$ has an expansion:
+    \begin{equation}
+        f(x_1, \cdots, x_k) = \sum_{n_1, \cdots, n_k}^{\infty} g(n_1, \cdots, n_k) \prod_{i=1}^k \frac{(-1)^{n_i}}{n_i!} x_i^{n_i}
+    \end{equation}
+    where $g(n_1, \cdots, n_k)$ is a continuously analytic function everywhere, 
+    then the $k$-dimensional Mellin transform satisfies a multivariate version of Ramanujan's master theorem as follows:
+    \begin{equation}
+        \begin{aligned}
+            & \mathcal{M}[f(x_1, \cdots, x_k)](s_1, \cdots, s_k) \\
+            & \coloneqq \int_{\mathbb{R}_+^k} \prod_{i=1}^{k} x_i^{s_i-1} f(x_1, \cdots, x_k) dx_1 \cdots dx_k \\
+            & = \prod_{i=1}^{k} \Gamma(s_i)g(-s_1, \cdots, -s_k)
+        \end{aligned}
+    \end{equation}
+    The integral is convergent when $0 < Re(s_i) <1, \forall i \in \{1,\cdots,k\}$.
+\end{lemma}
+
+Note that $H(-x, -y)$ satisfies:
+\begin{equation}
+    H(-x, -y) = \sum_{i=0}^{\infty}\sum_{j=0}^{\infty}\gamma_{ij}\Gamma(i+1)\Gamma(j+1)\frac{(-1)^i(-1)^j}{i!j!}x^iy^j
+\end{equation}
+By \Cref{le:MultiRam}, the $k$-dimensional Mellin transform follows:
+\begin{equation}
+    \begin{aligned}
+        & \mathcal{M}[H(-x, -y)](s, t) \\
+        & \coloneqq \int_{\mathbb{D}} x^{s-1}y^{t-1} H(-x, -y) dxdy \\
+        & = \Gamma(s)\Gamma(t)\Gamma(1-s)\Gamma(1-t) \gamma_c(-s, -t)\\
+        & = \frac{\pi^2}{\sin\pi s \sin\pi t} \gamma_c(-s, -t)
+    \end{aligned}
+\end{equation}
+where $\gamma_c(s, t)$ is exactly the extension of sequence $\gamma_{ij}$ in the continuous scenario.
+Ultimately, by solving the definite integral, we can obtain:
+\begin{equation}
+    \begin{aligned}
+        & \frac{\pi^2}{\sin\pi s \sin\pi t}\gamma_c(-s, -t) \\
+        & = \int_{\mathbb{D}} x^{s-1}y^{t-1} H(-x, -y) dxdy \\
+        & = \int_{\mathbb{D}} \sum_{i=0}^{\infty}\sum_{j=0}^{\infty}\gamma_{ij}x^{i+s-1}y^{j+t-1} dxdy \\
+        & = \int_{\mathbb{D}} (\gamma_{00}x^{s-1}y^{t-1} + \gamma_{10}x^{s}y^{t-1} + \gamma_{01}x^{s-1}y^{t} + \gamma_{11}x^sy^t) dxdy \\
+        & = \gamma_{00}\frac{x^s}{s}\bigg|_0^1\frac{y^t}{t}\bigg|_0^1 + \gamma_{10}\frac{x^{s+1}}{s+1}\bigg|_0^1\frac{y^t}{t}\bigg|_0^1 + \gamma_{01}\frac{x^s}{s}\bigg|_0^1\frac{y^{t+1}}{t+1}\bigg|_0^1 + \gamma_{11}\frac{x^{s+1}}{s+1}\bigg|_0^1\frac{y^{t+1}}{t+1}\bigg|_0^1 \\
+        & = \frac{[m(m-1)]^{-1}}{st}+\frac{(mn)^{-1}}{(s+1)t}+\frac{(mn)^{-1}}{s(t+1)}+\frac{[n(n-1)]^{-1}}{(s+1)(t+1)}
+    \end{aligned}
+\end{equation}
+By replacing $-s$ and $-t$, the original theorem is thereby proven.
+\end{proof}
+
+
+\subsection{Proof of \Cref{th:trans}}\label{proof:trans}
+\begin{proof}
+Let the reference samples belong to batch $k$ and the target samples belong to batch $k^\prime$.
+If \Cref{as:pattern} holds, the reference samples $\bm{\zeta}_l$ satisfy:
+\begin{equation}
+    \begin{cases}
+        & \bm{\zeta}_l = \bm{\zeta}_l^* + \bm{b}_l^k + \bm{\epsilon}_l \\
+        &  \widehat{\bm{\zeta}}_l \coloneqq G(\bm{\zeta}_l) = \widehat{\bm{\zeta}}_l^* + \bm{b}_l^k
+    \end{cases}
+\end{equation}
+where $\widehat{\bm{\zeta}}_m^* \sim P_{\widehat{\bm{\zeta}}^*}, \bm{b}_l^k \sim P_{\bm{b}^k}$, and $l$ is the reference sample size.
+Because the generator doesn't learn the distribution of random noise, $\widehat{\bm{\zeta}}_l$ excludes $\bm{\epsilon}_l$.
+
+Considering that the target samples $\widehat{\bm{y}}_n, \widehat{\bm{x}}_m$ are reconstructed with the reference information,
+\begin{equation}
+    \begin{cases}
+        & \bm{x}_m = \bm{x}_m^* + \bm{b}_m^{k^\prime} + \bm{\epsilon}_m \\
+        & \widehat{\bm{x}}_m = \widehat{\bm{\zeta}}_m^* + \bm{b}_m^k \\
+        & \bm{y}_n = \bm{y}_n^* + \bm{b}_n^{k^\prime} + \bm{\epsilon}_n \\
+        & \widehat{\bm{y}}_n = \widehat{\bm{\zeta}}_n^* + \bm{b}_n^k 
+    \end{cases}
+\end{equation}
+where $\widehat{\bm{\zeta}}_m^*, \widehat{\bm{\zeta}}_n^* \stackrel{i.i.d.}{\sim} P_{\widehat{\bm{\zeta}}^*}$,
+$\bm{b}_m^k, \bm{b}_n^k \stackrel{i.i.d.}{\sim} P_{\bm{b}^k}$ and $\bm{b}_m^{k^\prime}, \bm{b}_n^{k^\prime} \stackrel{i.i.d.}{\sim} P_{\bm{b}^{k^\prime}}$.
+Subsequently, the reconstruction errors satisfy:
+\begin{equation}
+    \begin{cases}
+        & \bm{\delta}_m^x = \bm{x}_m - \widehat{\bm{x}}_m = \bm{x}_m^* - \widehat{\bm{\zeta}}_m^* + \bm{b}_m^{k^\prime} - \bm{b}_m^k + \bm{\epsilon}_m \\
+        & \bm{\delta}_n^y = \bm{y}_n - \widehat{\bm{y}}_n = \bm{y}_n^* - \widehat{\bm{\zeta}}_n^* + \bm{b}_n^{k^\prime} - \bm{b}_n^k + \bm{\epsilon}_n
+    \end{cases}
+\end{equation}
+For a more concise representation, we define:
+\begin{equation}
+    \begin{cases}
+        & \bm{\delta}_m^{x*} = \bm{x}_m^* - \widehat{\bm{\zeta}}_m^*, \quad \bm{\delta}_m^b = \bm{b}_m^{k^\prime} - \bm{b}_m^k + \bm{\epsilon}_m \\
+        & \bm{\delta}_m^{y*} = \bm{y}_n^* - \widehat{\bm{\zeta}}_n^*, \quad \bm{\delta}_n^b = \bm{b}_n^{k^\prime} - \bm{b}_n^k + \bm{\epsilon}_n
+    \end{cases}
+\end{equation}
+
+Under these symbol representations, if MMD is induced by linear kernel, the kernel is expandable as follows:
+\begin{equation}
+    \begin{aligned}
+        & k(\bm{\delta}_i^x, \bm{\delta}_j^x) = k(\bm{\delta}_i^{x*}, \bm{\delta}_j^{x*}) + k(\bm{\delta}_i^b, \bm{\delta}_j^b) + k(\bm{\delta}_i^{x*}, \bm{\delta}_j^b) + k(\bm{\delta}_i^b, \bm{\delta}_j^{x*}) \\
+        & k(\bm{\delta}_i^y, \bm{\delta}_j^y) = k(\bm{\delta}_i^{y*}, \bm{\delta}_j^{y*}) + k(\bm{\delta}_i^b, \bm{\delta}_j^b) + k(\bm{\delta}_i^{y*}, \bm{\delta}_j^b) + k(\bm{\delta}_i^b, \bm{\delta}_j^{y*}) \\
+        & k(\bm{\delta}_i^x, \bm{\delta}_j^y) = k(\bm{\delta}_i^{x*}, \bm{\delta}_j^{y*}) + k(\bm{\delta}_i^b, \bm{\delta}_j^b) + k(\bm{\delta}_i^{x*}, \bm{\delta}_j^b) + k(\bm{\delta}_i^b, \bm{\delta}_j^{y*})
+    \end{aligned}
+\end{equation}
+Subsequently, considering \eqref{eq:MMD_XY}, therefore it follows that:
+\begin{equation}\label{eq:MMDMMD}
+    \begin{aligned}
+        MMD^2\left(\bm{\delta}_m^x, \bm{\delta}_n^y\right) = &
+        \frac{1}{m(m-1)}\sum_{i}^{m}\sum_{j\neq i}^{m}k(\bm{\delta}_i^x, \bm{\delta}_j^x)
+        + \frac{1}{n(n-1)}\sum_{i}^{n}\sum_{j\neq i}^{n}k(\bm{\delta}_i^y, \bm{\delta}_j^y) \\
+        & - \frac{2}{mn}\sum_{i}^{m}\sum_{j}^{n}k(\bm{\delta}_i^x, \bm{\delta}_j^y) \\
+        = & MMD^2\left(\bm{\delta}_m^{x*}, \bm{\delta}_n^{y*}\right) + MMD^2\left(\bm{\delta}_m^b, \bm{\delta}_n^b\right) + 2R_{mn}^x + 2R_{mn}^y
+    \end{aligned}
+\end{equation}
+where the remainder term $R_{mn}^x, R_{mn}^y$ are defined as:
+\begin{equation}
+    \begin{aligned}
+        R_{mn}^x & \coloneqq \frac{1}{m(m-1)}\sum_{i}^{m}\sum_{j\neq i}^{m}{\bm{\delta}_i^b}^T \bm{\delta}_j^{x*} - \frac{1}{n^2}\sum_{i}^{n}\sum_{j}^{n}{\bm{\delta}_i^b}^T \bm{\delta}_j^{x*} \\
+        R_{mn}^y & \coloneqq \frac{1}{n(n-1)}\sum_{i}^{m}\sum_{j\neq i}^{m}{\bm{\delta}_i^b}^T \bm{\delta}_j^{y*} - \frac{1}{m^2}\sum_{i}^{m}\sum_{j}^{m}{\bm{\delta}_i^b}^T \bm{\delta}_j^{y*}
+    \end{aligned}
+\end{equation}
+
+Before analyzing the transfer error of $MMD^2\left(\bm{\delta}_m^x, \bm{\delta}_n^y\right)$, let's first discuss the convergence of each term in \eqref{eq:MMDMMD}.
+For the first and second terms, we analyze them using the following \Cref{le:MMDcon} \cite{gretton2012kernel}.
+\begin{lemma}\label{le:MMDcon}
+    Assume $0 \leq k(\bm{x}_i, \bm{x}_j) \leq K $. Then:
+    \begin{equation}
+        \mathbb{P}\left(\big|MMD^2(\bm{X}, \bm{Y}) - MMD^2(p, q)\big| \geq \varepsilon \right) \leq 2\exp\left(\frac{-\varepsilon^2mn}{8K^2(m+n)}\right)
+    \end{equation}
+    where $\bm{x}_i \sim p, \bm{y}_j \sim q$.
+\end{lemma}
+Then, we obtain:
+\begin{equation}\label{eq:1st2nd}
+    \begin{gathered}
+        \mathbb{P}\left(\big|MMD^2(\bm{\delta}_m^{x*}, \bm{\delta}_n^{y*}) - MMD^2(P_{\bm{\delta}^{x*}}, P_{\bm{\delta}^{y*}}) \big| \geq \varepsilon \right) \leq 2\exp\left(\frac{-Cn\varepsilon^2}{8(1+C){K_+^x}^2}\right) \\
+        \mathbb{P}\left(\big|MMD^2(\bm{\delta}_m^{b}, \bm{\delta}_n^{b}) - 0 \big| \geq \varepsilon \right) \leq 2\exp\left(\frac{-Cn\varepsilon^2}{8(1+C){K_+^b}^2}\right)
+    \end{gathered}
+\end{equation}
+where $K_+^x \coloneqq \sup_{ij} k(\bm{\delta}_i^{x*}, \bm{\delta}_j^{x*})$, $K_+^b \coloneqq \sup_{ij} k(\bm{\delta}_i^{b}, \bm{\delta}_j^{b})$.
+
+For the third term $R_{mn}^x$ in \eqref{eq:MMDMMD}, we employ the following \Cref{le:1/nepsilon} to discuss the convergence, and the proof is available at \Cref{proof:1/nepsilon}.
+\begin{lemma}\label{le:1/nepsilon}
+    For any random variables $x_1, x_2, \cdots, x_k$, they always satisfy:
+    \begin{equation}
+        \mathbb{P}\left(\Bigg|\sum_{i=1}^{k}x_i\Bigg| \geq \varepsilon\right) \leq \mathbb{P}\left(\sum_{i=1}^{k}|x_i| \geq \varepsilon\right) \leq \sum_{i=1}^{k}\mathbb{P}\left(|x_i| \geq \frac{\varepsilon}{k}\right)
+    \end{equation}
+    where $\varepsilon \geq 0$, $k \in \mathbb{Z}_+$
+\end{lemma}
+Considering that $\bm{\delta}^b$ and $\bm{\delta}^{x*}$ are mutually independent, we define the random variable $\xi \coloneqq {\bm{\delta}^b}^T\bm{\delta}^{x*} \in \mathbb{R}$.
+According to \Cref{le:1/nepsilon} and Hoeffding's Inequality \cite{hoeffding1994probability}, $R_{mn}^x$ can be bounded as follows:
+\begin{equation}\label{eq:3rd}
+    \begin{aligned}
+        & \mathbb{P}(\big|R_{mn}^x\big| \geq \varepsilon) = \mathbb{P}\left(\Bigg| \frac{1}{m(m-1)}\sum_{i=1}^{m(m-1)}\xi_i - \frac{1}{n^2}\sum_{j=1}^{n^2}\xi_j\Bigg| \geq \varepsilon\right) \\
+        & = \mathbb{P}\left(\Bigg| \frac{1}{m(m-1)}\sum_{i=1}^{m(m-1)}\xi_i - \mathbb{E}(\xi) + \mathbb{E}(\xi) - \frac{1}{n^2}\sum_{j=1}^{n^2}\xi_j\Bigg| \geq \varepsilon\right) \\
+        & \leq \mathbb{P}\left(\Bigg| \frac{1}{m(m-1)}\sum_{i=1}^{m(m-1)}\xi_i - \mathbb{E}(\xi) \Bigg| \geq \frac{\varepsilon}{2}\right) + \mathbb{P}\left(\Bigg| \frac{1}{n^2}\sum_{j=1}^{n^2}\xi_j - \mathbb{E}(\xi) \Bigg| \geq \frac{\varepsilon}{2}\right) \\
+        & \leq 2\exp\left(\frac{-2m(m-1)(\varepsilon/2)^2}{{K_+^\xi}^2}\right) + 2\exp\left(\frac{-2n^2(\varepsilon/2)^2}{{K_+^\xi}^2}\right) \\
+        & \leq 4\exp\left(\frac{-m(m-1)\varepsilon^2}{2{K_+^\xi}^2}\right)
+    \end{aligned}
+\end{equation}
+where $K_+^\xi \coloneqq \sup_{i,j} (\xi_i - \xi_j)$
+
+Similarly, for the forth term $R_{mn}^y$ in \eqref{eq:MMDMMD}, we define the random variable $\theta \coloneqq {\bm{\delta}^b}^T\bm{\delta}^{y*} \in \mathbb{R}$, 
+and $K_+^\theta \coloneqq \sup_{i,j} (\theta_i - \theta_j)$. 
+Thus, $R_{mn}^y$ can be bounded as follows:
+\begin{equation}\label{eq:4th}
+    \mathbb{P}(\big|R_{mn}^y\big| \geq \varepsilon) \leq 4\exp\left(\frac{-m^2\varepsilon^2}{2{K_+^\theta}^2}\right)
+\end{equation}
+
+Combined \eqref{eq:1st2nd}, \eqref{eq:3rd} and \eqref{eq:4th}, we also employ \Cref{le:1/nepsilon} to obtain:
+\begin{equation}
+    \begin{aligned}
+        & \mathbb{P}\left(\big| MMD^2(\bm{\delta}_m^x, \bm{\delta}_n^y) - MMD^2(P_{\bm{\delta}^{x*}}, P_{\bm{\delta}^{y*}}) \big| \geq \varepsilon \right) \\
+        & \leq \mathbb{P}\left(\big|MMD^2(\bm{\delta}_m^{x*}, \bm{\delta}_n^{y*}) - MMD^2(P_{\bm{\delta}^{x*}}, P_{\bm{\delta}^{y*}}) \big| \geq \frac{\varepsilon}{4} \right) \\
+        & \quad + \mathbb{P}\left(\big|MMD^2(\bm{\delta}_m^{b}, \bm{\delta}_n^{b})\big| \geq \frac{\varepsilon}{4} \right) + \mathbb{P}(\big|2R_{mn}^x\big| \geq \frac{\varepsilon}{4}) + \mathbb{P}(\big|2R_{mn}^y\big| \geq \frac{\varepsilon}{4}) \\
+        & \leq 4\exp\left(\frac{-Cn\varepsilon^2}{128(1+C)K_+^2}\right) + 4\exp\left(\frac{-m(m-1)\varepsilon^2}{128K_+^2}\right) + 4\exp\left(\frac{-m^2\varepsilon^2}{128K_+^2}\right)
+    \end{aligned}
+\end{equation}
+where $K_+ \coloneqq \max\{K_+^x, K_+^b, K_+^\xi, K_+^\theta\}$.
+When $m > 1 + (1+C)^{-1}$, the following inequality always holds\footnote{In fact, this condition is always satisfied as long as there is more than only two normal sample.}:
+\begin{equation}
+    \frac{Cn}{1+C} < m(m-1) < m^2
+\end{equation}
+Finally, we can obtain:
+\begin{equation}
+    \mathbb{P}\left(\big| MMD^2(\bm{\delta}_m^x, \bm{\delta}_n^y) - MMD^2(P_{\bm{\delta}^{x*}}, P_{\bm{\delta}^{y*}}) \big| \geq \varepsilon \right) \leq 12\exp\left(\frac{-Cn\varepsilon^2}{128(1+C)K_+^2}\right)
+\end{equation}
+If $\alpha\coloneqq12, \beta\coloneqq(128K_+^2)^{-1}$, the original theorem will be proven.
+\end{proof}
+
+
+\subsection{Proof of \Cref{le:1/nepsilon}}\label{proof:1/nepsilon}
+\begin{proof}
+On one hand, according to the triangle inequality, we have:
+\begin{equation}
+    \Bigg|\sum_{i=1}^{k}x_i\Bigg| \leq \sum_{i=1}^{k}|x_i|
+\end{equation}
+which also indicates
+\begin{equation}
+    \left\{\Bigg|\sum_{i=1}^{k}x_i\Bigg| \geq \varepsilon\right\} \subset \left\{\sum_{i=1}^{k}|x_i| \geq \varepsilon\right\}
+\end{equation}
+
+On the other hand, the following relationship always holds:
+\begin{equation}
+    \left\{\sum_{i=1}^{k}|x_i| \geq \varepsilon\right\} \subset \bigcup_{i=1}^k \left\{|x_i| \geq \frac{\varepsilon}{k}\right\}
+\end{equation}
+Thus, we have:
+\begin{equation}
+    \mathbb{P}\left(\Bigg|\sum_{i=1}^{k}x_i\Bigg| \geq \varepsilon\right) \leq \mathbb{P}\left(\sum_{i=1}^{k}|x_i| \geq \varepsilon\right) \leq \sum_{i=1}^{k}\mathbb{P}\left(|x_i| \geq \frac{\varepsilon}{k}\right)
+\end{equation}
+
+\end{proof}
 
 \end{document}
 
