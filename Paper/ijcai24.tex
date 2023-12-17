@@ -186,7 +186,7 @@ effectively distinguish anomalies of various subtypes.
 
 To address these limitations, we propose an comprehensive workflow consists of fine-grained anomalous cell 
 detection and batch correction for scRNA-seq data, named ACsleuth, aiming at 
-subtyping anomalies from the raw data which contains various normal and diseased types of 
+detecting anomalies from the raw data which contains various normal and diseased types of 
 cells. Our contributions are summarized as follows:
 \begin{itemize}
 \item Innovatively, we introduce an conprehensive workflow called ACsleuth, aiming at 
@@ -254,13 +254,9 @@ while cell annotation demands the utilization of prior information to assign spe
 labels to the cells. However, compared to cell annotation, fine-grained subtype detection necessitates 
 the acquisition of more robust representations. Given that the observations from different 
 subtypes fall under the same subcategory, the inherent differences between them tend to 
-be subtler. Therefore, fine-grained subtype detection relies heavily on distinctive representations to 
-achieve accurate classification. In summary, both anomaly detection and fine-grained detection 
-necessitate learning precise representations, so that it is straightforward that we can 
-propose a pipeline comprising anomaly detection and fine-grained subtype detection via the identical objective. 
-Notably, to the best of our knowledge, none of the previous works are designed for a 
-comprehensive workflow which contains such subtasks including anomaly detection and 
-anomalies detailed multi-classification.
+be subtler. Notably, to the best of our knowledge, none of the previous works are designed for a 
+comprehensive workflow which contains such subtasks including domain-unbiased anomaly detection, 
+batch effect correction and fine-grained anomaly detection.
 
 \section{Methods}
 \begin{figure}
