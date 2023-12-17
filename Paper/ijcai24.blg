@@ -3,50 +3,48 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: ijcai24.aux
 The style file: named.bst
 Database file #1: ijcai24.bib
-Warning--there's a number but no volume in dands
-Warning--there's a number but no volume in scArches
-Warning--empty booktitle in kmeans
+Warning--can't use both volume and number fields in kmeans
 Warning--can't use both volume and number fields in DFCN
 Warning--can't use both volume and number fields in scTAG
-You've used 35 entries,
+You've used 37 entries,
             2439 wiz_defined-function locations,
-            775 strings with 11903 characters,
-and the built_in function-call counts, 17045 in all, are:
-= -- 1695
-> -- 956
-< -- 12
-+ -- 344
-- -- 340
-* -- 1468
-:= -- 2762
-add.period$ -- 113
-call.type$ -- 35
-change.case$ -- 307
-chr.to.int$ -- 35
+            793 strings with 12499 characters,
+and the built_in function-call counts, 18535 in all, are:
+= -- 1869
+> -- 1003
+< -- 15
++ -- 361
+- -- 356
+* -- 1594
+:= -- 2963
+add.period$ -- 120
+call.type$ -- 37
+change.case$ -- 320
+chr.to.int$ -- 37
 cite$ -- 40
-duplicate$ -- 616
-empty$ -- 1110
-format.name$ -- 378
-if$ -- 3484
+duplicate$ -- 670
+empty$ -- 1224
+format.name$ -- 397
+if$ -- 3816
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 36
-newline$ -- 180
-num.names$ -- 109
-pop$ -- 272
+missing$ -- 38
+newline$ -- 190
+num.names$ -- 115
+pop$ -- 278
 preamble$ -- 1
-purify$ -- 343
+purify$ -- 358
 quote$ -- 0
-skip$ -- 516
+skip$ -- 572
 stack$ -- 0
-substring$ -- 794
-swap$ -- 179
-text.length$ -- 12
+substring$ -- 968
+swap$ -- 207
+text.length$ -- 15
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 276
-warning$ -- 5
-while$ -- 122
-width$ -- 40
-write$ -- 464
-(There were 5 warnings)
+type$ -- 292
+warning$ -- 3
+while$ -- 139
+width$ -- 42
+write$ -- 494
+(There were 3 warnings)

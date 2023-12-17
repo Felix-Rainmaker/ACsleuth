@@ -122,18 +122,16 @@ fourth@example.com
     data analysis has been greatly prompted by the development of deep learning, we can 
     effectively detect anomalous cells and explore their detail types. However, most of 
     works simply focus on detecting anomalies within normal samples, overlooking the 
-    opportunity for more detailed distinctions of them. Moreover, the essence of both 
-    anomaly and fine-grained detection is to learn distinct representations for different 
-    sample categories, suggesting a straightforward pipeline of sequentially detecting 
-    anomalies then subtyping them. Thus, we introduce an innovative workflow called ACsleuth, 
-    aiming at fine-grained Anomalous cell detection for single-cell multiomics, which 
-    further contains a batch correction module to alleviate bias inherent in the raw 
-    data. By employing a GAN model to reconstruct normal samples and leveraging the 
-    reconstruction error as the assessment criterion for the anomaly detector, we then 
-    utilize the DESC clustering method for scRNA-seq data to explore subtypes of anomalies. 
-    Extensive experiments improve the superiority of ACsleuth both of the comparison with the 
-    state-of-the-art anomaly detection methods in detecting anomalies and simple 
-    combinations of anomaly detection and clustering methods in fine-grained anomalous detection tasks.
+    opportunity for more detailed distinctions of them. Moreover, domain bias, commonly 
+    manifested as batch effects and distribution heterogeneities among various sequencing technologies, 
+    presents significant challenges in biological data analysis. Thus, we introduce an innovative workflow called ACsleuth, 
+    aiming at domain adaptive and fine-grained anomalous cell detection for single-cell multiomics.
+    We employ a GAN-based model to reconstruct normal samples and leveraging the Maximum Mean Discrepancy (MMD) 
+    metric for the unbiased anomaly inference. We then utilize the DESC clustering method for 
+    scRNA-seq data to explore subtypes of anomalies. Extensive experiments improve the superiority 
+    of ACsleuth both of the comparison with the state-of-the-art anomaly detection methods in 
+    detecting anomalies and simple combinations of anomaly detection and clustering methods in 
+    fine-grained anomalous detection tasks.
 \end{abstract}
 
 \section{Introduction}
@@ -157,7 +155,7 @@ Anomaly detection naturally exhibits class-imbalance characteristics, while the 
 in fine-grained anomaly detection lies in acquiring more precise representations of distinct cell types 
 due to their inherent similarity. Nevertheless, employing reference-based methods can be challenging, given the presence of 
 technical variation (e.g., different laboratory conditions) across diverse studies, 
-commonly referred recognized as batch effects in molecular biology literature \cite{Polyphony}. 
+commonly recognized as batch effects in molecular biology literature \cite{Polyphony}. 
 The intricate nature of scRNA-seq data, characterized by noise, batch effects, high 
 dimensionality and sparsity \cite{dands} poses challenges that impede these deep 
 methods from achieving optimal performance directly based on the raw data.
@@ -166,7 +164,7 @@ Domain adaptation is a crucial consideration in biological data analysis. Under 
 typical instances is correcting batch effect, as we have discussed above. For example, the gene expression of cells from 
 the same tissue but obtained from different patients, may be interfered by pronounced batch effects. 
 Additionally, data derived from different sequencing technologies exhibits heterogeneous distributions, while 
-compared with scRNA-seq,other sequencing technologies like scATAC-seq are even rarer \cite{RNAmore}.
+compared with scRNA-seq,other sequencing technologies like scATAC-seq are even fewer \cite{RNAmore}.
 This dataset shift is commonly denoted as domain bias in computer vision, encompassing aspects 
 such as style differences, diverse sensory devices, etc \cite{domainada}.
 Both batch effects within the same sequencing technique data and the bias arising from different 
@@ -191,26 +189,23 @@ detection and batch correction for scRNA-seq data, named ACsleuth, aiming at
 subtyping anomalies from the raw data which contains various normal and diseased types of 
 cells. Our contributions are summarized as follows:
 \begin{itemize}
-\item Methodologically, we introduce an innovative workflow called ACsleuth, which contains 
+\item Innovatively, we introduce an conprehensive workflow called ACsleuth, aiming at 
 fine-grained anomalous cell detection. The anomaly detector is first trained 
-unsupervisedly on the reference dataset which has only normal samples, then we learn 
+unsupervisedly on the reference dataset which only contains normal samples, then we learn 
 the batch effects on the normal samples identified by the former detector and use it for 
 the batch correction on anomaly sets sequentially, finally subtyping anomalies simply by a recent 
 single-cell clustering method.
-\item Innovatively, we achieve domain adaptation by tackling batch effects in the target dataset 
-after removing anomalous samples and using datasets derived from different sequencing technologies 
-as the reference and the target data. For the former, ACsleuth involves leveraging a wasserstein 
-distance as the domain transfer loss in MMD, to learn the domain bias with solely normal cells 
-then subsequently applying bias correction on the detected anomalies before fine-grained subtyping them. 
-For the latter, we simply correct the domain bias in the cross-domain anomaly detection task to obtain 
-distinct representations for anomalous cells.
+\item Methodologically, we utilize Maximum Mean Discrepancy (MMD) for inferring anomalous cells. 
+We prove that the MMD metric remains unaffected by domain bias, ensuring effective training and  
+detection across different batches and enabling potential cross-domain anomaly detection. We then 
+model batch effects using normal cells from both reference and target datasets, followed by batch 
+correction applied to detected anomalies before fine-grained subtyping them.
 \item Empirically, we conduct extensive experiments to validate the exceptional performance 
 of ACsleuth. Across evaluations on three distinct scRNA-seq datasets and one scATAC-seq dataset 
 for cross-domain anomaly detection task within different numbers of highly variable genes, 
 ACsleuth consistently raised state-of-the-art in the majority of anomaly detection and 
 fine-grained detection.
 \end{itemize}
-
 
 \section{Related Works}
 \subsection{Anomaly Detection}
@@ -236,8 +231,8 @@ models like \cite{EffGAN} still struggle with distinguishing multiple normal sam
 occurring model-collapse during training. Additionally, AE frameworks exhibit limitations 
 handling the noisy or high-dimensional sparse data.
 
-\subsection{Single Cell RNA-Seq Data Subtyping}
-Single-cell subtyping aims to identify distinct subtypes within the same cell type, e.g., 
+\subsection{scRNA-seq Data Fine-grained Detection}
+Single-cell fine-grained type detection aims to identify distinct subtypes within the same cell type, e.g., 
 tumors, which is similar to a broader task called cell annotation. The essence of two 
 tasks lies in learning representations that effectively capture the heterogeneity among 
 distinct types to the fullest extent. Cell annotation simply follows three 
@@ -254,10 +249,10 @@ detection, SCEVAN \cite{SCEVAN} and CopyKAT \cite{CopyKAT} are designed
 specifically for tumors since they used the prior information, CAMLU \cite{CAMLU} 
 exhibits a higher degree of generality via the employment of AE, albeit its performance is suboptimal. 
 
-Detecting subtypes solely involves assigning labels to distinct types of samples, 
+Detecting fine-grained subtypes solely involves assigning labels to distinct subtypes of observations, 
 while cell annotation demands the utilization of prior information to assign specific 
-labels to the cells. However, compared to cell annotation, subtype detection necessitates 
-the acquisition of more robust representations. Given that the samples from different 
+labels to the cells. However, compared to cell annotation, fine-grained subtype detection necessitates 
+the acquisition of more robust representations. Given that the observations from different 
 subtypes fall under the same subcategory, the inherent differences between them tend to 
 be subtler. Therefore, fine-grained subtype detection relies heavily on distinctive representations to 
 achieve accurate classification. In summary, both anomaly detection and fine-grained detection 
@@ -266,7 +261,6 @@ propose a pipeline comprising anomaly detection and fine-grained subtype detecti
 Notably, to the best of our knowledge, none of the previous works are designed for a 
 comprehensive workflow which contains such subtasks including anomaly detection and 
 anomalies detailed multi-classification.
-
 
 \section{Methods}
 \begin{figure}
@@ -524,7 +518,70 @@ trained generator within \textit{module III}.
     \caption{Information of Datasets.}
     \label{tab:tab1}
 \end{table}
+\begin{table*}[ht]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{cccccccccc}
+        \hline
+        DATA & Anomaly & Highly Genes & ACsleuth & SLAD & ICL & NeuTraL & RCA & AE & Scmap \\
+        \hline
+        \multirow{6}{*}{\centering PBMCs} & \multirow{3}{*}{\centering B Cells} & 3000 & \textbf{0.833$\pm$0.034} & 0.347$\pm$0.023 & 0.262$\pm$0.029 &0.299$\pm$0.014 & 0.267$\pm$0.007 & 0.449$\pm$0.015 & 0.377$\pm$0. \\
+        & & 6000 & \textbf{0.818$\pm$0047} & 0.279$\pm$0.021 & 0.246$\pm$0.024 & 0.234$\pm$0.022 & 0.266$\pm$0.009 & 0.401$\pm$0.008 & 0.393$\pm$0. \\
+        & & full & \textbf{0.785$\pm$0.044} & 0.149$\pm$0.007 & 0.176$\pm$0.014 & 0.215$\pm$0.010 & 0.266$\pm$0.006 & 0.258$\pm$0.006 & 0.390$\pm$0. \\
+        & \multirow{3}{*}{\centering NK Cells} & 3000 & \textbf{0.804$\pm$0.004} & 0.548$\pm$0.013 & 0.307$\pm$0.042 & 0.330$\pm$0.025 & 0.258$\pm$0.025 & 0.462$\pm$0.012 & 0.495$\pm$0. \\
+        & & 6000 & \textbf{0.819$\pm$0.022} & 0.587$\pm$0.021 & 0.359$\pm$0.038 & 0.351$\pm$0.030 & 0.259$\pm$0.024 & 0.545$\pm$0.006 & 0.615$\pm$0. \\
+        & & full & \textbf{0.757$\pm$0.035} & 0.607$\pm$0.015 & 0.168$\pm$0.013 & 0.294$\pm$0.065 & 0.259$\pm$0.024 & 0.617$\pm$0.005 & 0.589$\pm$0. \\ 
+        \hline
+        \multirow{6}{*}{\centering Cancer-Single} & \multirow{3}{*}{\centering Epithelial \& Immune Tumor} & 3000 & \textbf{0.926$\pm$0.009} & 0.881$\pm$0.006 & 0.856$\pm$0.006 & 0.889$\pm$0.011 & 0.818$\pm$0.033 & 0.896$\pm$0.002 & 0.679$\pm$0. \\
+        & & 6000 & 0.832$\pm$0.014 & \textbf{0.862$\pm$0.004} & 0.844$\pm$0.005 & 0.847$\pm$0.006 & 0.600$\pm$0.041 & 0.853$\pm$0.003 & 0.683$\pm$0. \\
+        & & full & \textbf{0.826$\pm$0.035} & 0.785$\pm$0.005 & 0.572$\pm$0.006 & 0.691$\pm$0.040 & 0.649$\pm$0.009 & 0.717$\pm$0.006 & 0.734$\pm$0. \\
+        & \multirow{3}{*}{\centering Epithelial \& Stromal Tumor} & 3000 & 0.860$\pm$0.049 & 0.888$\pm$0.014 & 0.899$\pm$0.018 & \textbf{0.913$\pm$0.008} & 0.677$\pm$0.036 & 0.746$\pm$0.005 & 0.688$\pm$0. \\
+        & & 6000 & 0.824$\pm$0.007 & 0.828$\pm$0.014 & 0.856$\pm$0.014 & \textbf{0.892$\pm$0.008} & 0.543$\pm$0.025 & 0.681$\pm$0.006 & 0.735$\pm$0. \\
+        & & full & \textbf{0.717$\pm$0.059} & 0.638$\pm$0.005 & 0.556$\pm$0.006 & 0.686$\pm$0.024 & 0.471$\pm$0.026 & 0.571$\pm$0.003 & 0.683$\pm$0. \\
+        \hline
+        \multirow{3}{*}{\centering TME} & \multirow{3}{*}{\centering Tumor(pre)} & 3000 & 0.0$\pm$0.0 & 0.582$\pm$0.011 & 0.791$\pm$0.050 & 0.578$\pm$0.016 & 0.493$\pm$0.030 & 0.488$\pm$0.001 & 0.752$\pm$0. \\
+        & & 6000 & 0.0$\pm$0.0 & 0.590$\pm$0.017 & 0.728$\pm$0.028 & 0.591$\pm$0.013 & 0.511$\pm$0.038 & 0.509$\pm$0.002 & 0.733$\pm$0. \\
+        & & full & 0.0$\pm$0.0 & 0.640$\pm$0.021 & 0.756$\pm$0.012 & 0.638$\pm$0.017 & 0.538$\pm$0.032 & 0.532$\pm$0.002 & 0.529$\pm$0. \\
+        \hline
+        \multirow{3}{*}{\centering cSCC} & \multirow{3}{*}{\centering Diff \& Basal \& Cyc Tumor} & 3000 & 0.0$\pm$0.0 & 0.486$\pm$0.014 & 0.173$\pm$0.025 & 0.085$\pm$0.042 & 0.0$\pm$0.0 & 0.484$\pm$0.004 & 0.0$\pm$0. \\
+        & & 6000 & 0.0$\pm$0.0 & 0.503$\pm$0.007 & 0.154$\pm$0.020 & 0.123$\pm$0.030 & 0.0$\pm$0.0 & 0.491$\pm$0.006 & 0.0$\pm$0. \\
+        & & full & 0.0$\pm$0.0 & 0.510$\pm$0.010 & 0.155$\pm$0.052 & 0.140$\pm$0.031 & 0.0$\pm$0.0 & 0.561$\pm$0.005 & 0.0$\pm$0. \\
+        \hline
+        \multirow{3}{*}{\centering PBMC-TME} & \multirow{3}{*}{\centering Tumor(pre)} & 3000 & & 0.570$\pm$0.021 & 0.583$\pm$0.032 & 0.645$\pm$0.044 & 0.$\pm$0. & 0.524$\pm$0.002 & 0.$\pm$0.  \\
+        & & 6000 & & 0.573$\pm$0.034 & 0.629$\pm$0.044 & 0.637$\pm$0.070 & 0.$\pm$0. & 0.533$\pm$0.001 & 0.$\pm$0. \\
+        & & full & & 0.562$\pm$0.019 & 0.637$\pm$0.031 & 0.664$\pm$0.054 & 0.$\pm$0. & 0.524$\pm$0.001 & 0.$\pm$0. \\
+        \hline
+    \end{tabular}
+    }
+    \caption{Average F1 score with standard deviation for anomaly detection on single-cell transcriptomics datasets.}
+    \label{tab:tab2}
+\end{table*}
 
+\begin{table*}
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{ccccccccc}
+        \hline
+        DATA  & Anomaly & Highly Genes & ACsleuth & DFCN & EDESC & scTAG & Leiden & K-Means \\
+        \hline
+        \multirow{6}{*}{\centering Cancer-Single} & \multirow{3}{*}{\centering Epithelial \& Immune Tumor} & 3000 & 0.0$\pm$0.0 & 0.713$\pm$0.015 & 0.606$\pm$0.283 & 0.528$\pm$0.050 & 0.0$\pm$0.0 & 0.798$\pm$0.011 \\
+        & & 6000 & 0.0$\pm$0.0 & 0.652$\pm$0.020 & 0.782$\pm$0.041 & 0.316$\pm$0.117 & 0.0$\pm$0.0 & 0.778$\pm$0.014 \\
+        & & full & 0.0$\pm$0.0 & 0.628$\pm$0.025 & 0.751$\pm$0.004 & OOM & 0.0$\pm$0.0 & 0.748$\pm$0.004 \\
+        & \multirow{3}{*}{\centering Epithelial \& Stromal Tumor} & 3000 & 0.0$\pm$0.0 & 0.493$\pm$0.149 & 0.638$\pm$0.053 & 0.599$\pm$0.009 & 0.0$\pm$0.0 & 0.615$\pm$0.014 \\
+        & & 6000 & 0.0$\pm$0.0 & 0.274$\pm$0.034 & 0.593$\pm$0.066 & 0.543$\pm$0.082 & 0.0$\pm$0.0 & 0.611$\pm$0.026 \\
+        & & full & 0.0$\pm$0.0 & 0.0$\pm$0.0 & 0.474$\pm$0.037 & OOM & 0.0$\pm$0.0 & 0.489$\pm$0.010 \\
+        \multirow{3}{*}{\centering cSCC} & \multirow{3}{*}{\centering Diff \& Basal \& Cyc Tumor} & 3000 & 0.0$\pm$0.0 & 0.376$\pm$0.020 & 0.362$\pm$0.143 & 0.227$\pm$0.065 & 0.0$\pm$0.0 & 0.104$\pm$0.006 \\
+        & & 6000 & 0.0$\pm$0.0 & 0.355$\pm$0.002 & 0.395$\pm$0.013 & 0.152$\pm$0.015 & 0.0$\pm$0.0 & 0.107$\pm$0.003 \\
+        & & full & 0.0$\pm$0.0 & 0.366$\pm$0.080 & 0.291$\pm$0.024 & OOM & 0.0$\pm$0.0 & 0.0$\pm$0.0 \\
+        \multirow{3}{*}{\centering Cancer-Multi} & \multirow{3}{*}{\centering Epithelial \& Immune \& Stromal Tumor} & 3000 & 0.0$\pm$0.0 & 0.376$\pm$0.020 & 0.362$\pm$0.143 & 0.227$\pm$0.065 & 0.0$\pm$0.0 & 0.104$\pm$0.006 \\
+        & & 6000 & 0.0$\pm$0.0 & 0.355$\pm$0.002 & 0.395$\pm$0.013 & 0.152$\pm$0.015 & 0.0$\pm$0.0 & 0.107$\pm$0.003 \\
+        & & full & 0.0$\pm$0.0 & 0.366$\pm$0.080 & 0.291$\pm$0.024 & OOM & 0.0$\pm$0.0 & 0.0$\pm$0.0 \\
+        \hline
+    \end{tabular}
+    }
+    \caption{Average F1*NMI score with standard deviation for fine-grained anomaly detection on single-cell transcriptomics datasets.}
+    \label{tab:tab3}
+\end{table*}
 
 In this section, we introduce how ACsleuth subtypes anomaly cells detected by preceding 
 modules. Since \textit{module III} can align anomalies identified by module I across multiple 
@@ -577,65 +634,8 @@ change in the hard assignments of anomalous cells falls below a predefined thres
 reaches a predefined number of iterations. The subtype labels of anomalies can be readily 
 obtained from their final hard cluster assignments. Additionally, the number of subtype 
 labels is assumed to beknown or automatically inferred during the clustering. In detail, 
-\section{Experiments}
-\begin{table*}
-    \centering
-    \resizebox{\textwidth}{!}{
-    \begin{tabular}{cccccccccc}
-        \hline
-        DATA & Anomaly & Highly Genes & ACsleuth & SLAD & ICL & NeuTraL & RCA & AE & Scmap \\
-        \hline
-        \multirow{6}{*}{\centering PBMCs} & \multirow{3}{*}{\centering B Cells} & 3000 & \textbf{0.833$\pm$0.034} & 0.347$\pm$0.023 & 0.262$\pm$0.029 &0.299$\pm$0.014 & 0.267$\pm$0.007 & 0.449$\pm$0.015 & 0.377$\pm$0. \\
-        & & 6000 & \textbf{0.818$\pm$0047} & 0.279$\pm$0.021 & 0.246$\pm$0.024 & 0.234$\pm$0.022 & 0.266$\pm$0.009 & 0.401$\pm$0.008 & 0.393$\pm$0. \\
-        & & full & \textbf{0.785$\pm$0.044} & 0.149$\pm$0.007 & 0.176$\pm$0.014 & 0.215$\pm$0.010 & 0.266$\pm$0.006 & 0.258$\pm$0.006 & 0.390$\pm$0. \\
-        & \multirow{3}{*}{\centering NK Cells} & 3000 & \textbf{0.804$\pm$0.004} & 0.548$\pm$0.013 & 0.307$\pm$0.042 & 0.330$\pm$0.025 & 0.258$\pm$0.025 & 0.462$\pm$0.012 & 0.495$\pm$0. \\
-        & & 6000 & \textbf{0.819$\pm$0.022} & 0.587$\pm$0.021 & 0.359$\pm$0.038 & 0.351$\pm$0.030 & 0.259$\pm$0.024 & 0.545$\pm$0.006 & 0.615$\pm$0. \\
-        & & full & \textbf{0.757$\pm$0.035} & 0.607$\pm$0.015 & 0.168$\pm$0.013 & 0.294$\pm$0.065 & 0.259$\pm$0.024 & 0.617$\pm$0.005 & 0.589$\pm$0. \\ 
-        \hline
-        \multirow{6}{*}{\centering Cancer} & \multirow{3}{*}{\centering Epithelial \& Immune Tumor} & 3000 & \textbf{0.926$\pm$0.009} & 0.881$\pm$0.006 & 0.856$\pm$0.006 & 0.889$\pm$0.011 & 0.818$\pm$0.033 & 0.896$\pm$0.002 & 0.679$\pm$0. \\
-        & & 6000 & 0.832$\pm$0.014 & \textbf{0.862$\pm$0.004} & 0.844$\pm$0.005 & 0.847$\pm$0.006 & 0.600$\pm$0.041 & 0.853$\pm$0.003 & 0.683$\pm$0. \\
-        & & full & \textbf{0.826$\pm$0.035} & 0.785$\pm$0.005 & 0.572$\pm$0.006 & 0.691$\pm$0.040 & 0.649$\pm$0.009 & 0.717$\pm$0.006 & 0.734$\pm$0. \\
-        & \multirow{3}{*}{\centering Epithelial \& Stromal Tumor} & 3000 & 0.860$\pm$0.049 & 0.888$\pm$0.014 & 0.899$\pm$0.018 & \textbf{0.913$\pm$0.008} & 0.677$\pm$0.036 & 0.746$\pm$0.005 & 0.688$\pm$0. \\
-        & & 6000 & 0.824$\pm$0.007 & 0.828$\pm$0.014 & 0.856$\pm$0.014 & \textbf{0.892$\pm$0.008} & 0.543$\pm$0.025 & 0.681$\pm$0.006 & 0.735$\pm$0. \\
-        & & full & \textbf{0.717$\pm$0.059} & 0.638$\pm$0.005 & 0.556$\pm$0.006 & 0.686$\pm$0.024 & 0.471$\pm$0.026 & 0.571$\pm$0.003 & 0.683$\pm$0. \\
-        \hline
-        \multirow{3}{*}{\centering TME} & \multirow{3}{*}{\centering Tumor(pre)} & 3000 & 0.0$\pm$0.0 & 0.582$\pm$0.011 & 0.791$\pm$0.050 & 0.578$\pm$0.016 & 0.493$\pm$0.030 & 0.488$\pm$0.001 & 0.752$\pm$0. \\
-        & & 6000 & 0.0$\pm$0.0 & 0.590$\pm$0.017 & 0.728$\pm$0.028 & 0.591$\pm$0.013 & 0.511$\pm$0.038 & 0.509$\pm$0.002 & 0.733$\pm$0. \\
-        & & full & 0.0$\pm$0.0 & 0.640$\pm$0.021 & 0.756$\pm$0.012 & 0.638$\pm$0.017 & 0.538$\pm$0.032 & 0.532$\pm$0.002 & 0.529$\pm$0. \\
-        \hline
-        \multirow{3}{*}{\centering cSCC} & \multirow{3}{*}{\centering Diff \& Basal \& Cyc Tumor} & 3000 & 0.0$\pm$0.0 & 0.486$\pm$0.014 & 0.173$\pm$0.025 & 0.085$\pm$0.042 & 0.0$\pm$0.0 & 0.484$\pm$0.004 & 0.0$\pm$0. \\
-        & & 6000 & 0.0$\pm$0.0 & 0.503$\pm$0.007 & 0.154$\pm$0.020 & 0.123$\pm$0.030 & 0.0$\pm$0.0 & 0.491$\pm$0.006 & 0.0$\pm$0. \\
-        & & full & 0.0$\pm$0.0 & 0.510$\pm$0.010 & 0.155$\pm$0.052 & 0.140$\pm$0.031 & 0.0$\pm$0.0 & 0.561$\pm$0.005 & 0.0$\pm$0. \\
-        \hline
-        \multirow{3}{*}{\centering PBMC-TME} & \multirow{3}{*}{\centering Tumor(pre)} & 3000 & & 0.570$\pm$0.021 & 0.583$\pm$0.032 & 0.645$\pm$0.044 & 0.$\pm$0. & 0.524$\pm$0.002 & 0.$\pm$0.  \\
-        & & 6000 & & 0.573$\pm$0.034 & 0.629$\pm$0.044 & 0.637$\pm$0.070 & 0.$\pm$0. & 0.533$\pm$0.001 & 0.$\pm$0. \\
-        & & full & & 0.562$\pm$0.019 & 0.637$\pm$0.031 & 0.664$\pm$0.054 & 0.$\pm$0. & 0.524$\pm$0.001 & 0.$\pm$0. \\
-        \hline
-    \end{tabular}
-    }
-    \caption{Average F1 score with standard deviation for anomaly detection on single-cell transcriptomics datasets.}
-    \label{tab:tab2}
-\end{table*}
 
-\begin{table*}
-    \centering
-    \resizebox{\textwidth}{!}{
-    \begin{tabular}{ccccccccc}
-        \hline
-        DATA  & Anomaly & Highly Genes & ACsleuth & DFCN & EDESC & scTAG & Leiden & K-Means \\
-        \hline
-        \multirow{6}{*}{\centering Cancer} & \multirow{3}{*}{\centering Epithelial \& Immune Tumor} & 3000 & \textbf{0.926$\pm$0.009} & 0.881$\pm$0.006 & 0.856$\pm$0.006 & 0.889$\pm$0.011 & 0.818$\pm$0.033 & 0.896$\pm$0.002 \\
-        & & 6000 & 0.832$\pm$0.014 & \textbf{0.862$\pm$0.004} & 0.844$\pm$0.005 & 0.847$\pm$0.006 & 0.600$\pm$0.041 & 0.853$\pm$0.003 \\
-        & & full & \textbf{0.826$\pm$0.035} & 0.785$\pm$0.005 & 0.572$\pm$0.006 & 0.691$\pm$0.040 & 0.649$\pm$0.009 & 0.717$\pm$0.006 \\
-        & \multirow{3}{*}{\centering Epithelial \& Stromal Tumor} & 3000 & 0.860$\pm$0.049 & 0.888$\pm$0.014 & 0.899$\pm$0.018 & \textbf{0.913$\pm$0.008} & 0.677$\pm$0.036 & 0.746$\pm$0.005 \\
-        & & 6000 & 0.824$\pm$0.007 & 0.828$\pm$0.014 & 0.856$\pm$0.014 & \textbf{0.892$\pm$0.008} & 0.543$\pm$0.025 & 0.681$\pm$0.006 \\
-        & & full & \textbf{0.717$\pm$0.059} & 0.638$\pm$0.005 & 0.556$\pm$0.006 & 0.686$\pm$0.024 & 0.471$\pm$0.026 & 0.571$\pm$0.003 \\
-        \hline
-    \end{tabular}
-    }
-    \caption{Average F1*NMI score with standard deviation for fine-grained anomaly detection on single-cell transcriptomics datasets.}
-    \label{tab:tab3}
-\end{table*}
+\section{Experiments}
 \subsection{Experimental Settings}
 \textbf{Dataset.}	Our experiments contain anomaly cells’ detection and anomaly cell 
 clustering. Furthermore, each task splits to two parts. For the former, we use datasets 
@@ -700,7 +700,6 @@ challenge by learning such kind of biases from the normal samples split from ano
 detection, then subsequently correcting them on the detected anomalies before subtyping 
 them. We empirically establish the necessity of the batch correction module for the scRNA-seq data analysis.
 
-\textbf{Computational Performance.}
 \subsection{Ablation Studies}
 In this section, we conduct a series of ablation studies to validate how different 
 configurations of each module impact the anomaly subtyping task. We still assess ACsleuth with 
@@ -738,7 +737,7 @@ Finally, we utilize the DESC clustering algorithm to fine-grained detecting anom
 ACsleuth outperforms state-of-the-art approaches in anomaly detection methods for tabular 
 data and their simple combinations with deep clustering algorithms. Empirically results 
 strongly improve ACsleuth’ superiority, demonstrating its generalizability and robustness. 
-We’d like to further explore the potential of the domain adapyative fine-grained anomaly 
+We’d like to further explore the potential of the domain adaptative fine-grained anomaly 
 detection workflow for tabular data generalized to another fields.
 \section*{Acknowledgments}
 
